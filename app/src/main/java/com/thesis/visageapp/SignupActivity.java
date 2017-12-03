@@ -2,6 +2,7 @@ package com.thesis.visageapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,6 +11,25 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.thesis.visageapp.objects.User;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -48,8 +68,11 @@ public class SignupActivity extends AppCompatActivity {
     @Bind(R.id.button_signup_r)
     Button signUpButton;
 
+    private User user;
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        user = new User();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         ButterKnife.bind(this);
@@ -76,10 +99,10 @@ public class SignupActivity extends AppCompatActivity {
     public void signup() {
         Log.d(TAG, "Signup processed");
 
-        if (!this.validateRegisterData()) {
+       /* if (!this.validateRegisterData()) {
             onSignupFailed();
             return;
-        }
+        }*/
 
         this.signUpButton.setEnabled(false);
 
@@ -89,16 +112,24 @@ public class SignupActivity extends AppCompatActivity {
         progressDialog.setMessage(this.getResources().getString(R.string.signingUp));
         progressDialog.show();
 
-        String name = nameText.getText().toString();
-        // etc
+
 
         // TODO: Implement your own signup logic here.
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        // On complete call either onSignupSuccess or onSignupFailed
-                        // depending on success
+                        createNewUser();
+                        String postMessage = "";
+                        try {
+
+                            JSONObject userJson = user.createJsonUser();
+                            postMessage = userJson.toString();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                         new SendDeviceDetails().execute(postMessage);
+
                         onSignupSuccess();
                         // onSignupFailed();
                         progressDialog.dismiss();
@@ -107,10 +138,27 @@ public class SignupActivity extends AppCompatActivity {
     }
 
 
+
+
     public void onSignupSuccess() {
         signUpButton.setEnabled(true);
         setResult(RESULT_OK, null);
         finish();
+    }
+
+    public void createNewUser() {
+        user.setName(nameText.getText().toString());
+        user.setLogin(loginText.getText().toString());
+        user.setPassword(passwordText.getText().toString());
+        user.setSurname(surnameText.getText().toString());
+        user.setEmail(emailText.getText().toString());
+        user.setPhoneNumber(phoneNumberText.getText().toString());
+        user.setCountry(countryText.getText().toString());
+        user.setPostCode(postCodeText.getText().toString());
+        user.setCity(cityText.getText().toString());
+        user.setStreet(streetText.getText().toString());
+        user.setAddressDetails(addressDetails.getText().toString());
+
     }
 
     public void onSignupFailed() {

@@ -20,4 +20,6 @@
         <activity android:name="com.thesis.visageapp.SignupActivity" android:theme="@style/AppTheme.Dark" />
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
 </manifest>
