@@ -18,13 +18,13 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
 
-    @Bind(R.id.input_login)
+    @Bind(R.id.input_login_l)
     EditText loginText;
-    @Bind(R.id.input_password)
+    @Bind(R.id.input_password_l)
     EditText passwordText;
-    @Bind(R.id.button_login)
+    @Bind(R.id.button_login_l)
     Button loginButton;
-    @Bind(R.id.link_signup)
+    @Bind(R.id.link_signup_l)
     TextView signupLinkedText;
 
     @Override
@@ -116,11 +116,11 @@ public class LoginActivity extends AppCompatActivity {
 
     public boolean validateLoginData() {
         boolean isValidate = true;
-        if (!ValidateHelper.validateLogin(this.loginText.getText().toString())) {
+        if (!ValidateHelper.isValidLogin(this.loginText.getText().toString())) {
             this.loginText.setError(this.getResources().getString(R.string.loginError));
             isValidate = false;
         }
-        if (!ValidateHelper.validatePassword(this.passwordText.getText().toString())) {
+        if (!ValidateHelper.isValidPassword(this.passwordText.getText().toString())) {
             this.passwordText.setError(this.getResources().getString(R.string.passwordError));
             isValidate = false;
         }

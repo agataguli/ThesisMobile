@@ -7,4 +7,13 @@
     <string name="loginError">Login musi zawierać od 6 do 16 znaków.</string>
     <string name="loginFailed">Błąd logowania, sprawdź poprawność danych logowania.</string>
     <string name="authorizing">Trwa autoryzacja</string>
+    <string name="signUpFailed">Niepowodzenie rejestracji. Sprawdź poprawność danych.</string>
+    <string name="signingUp">Trwa zakładanie konta</string>
+    <string name="peselError">Pesel musi zawierać 11 cyfr</string>
+    <string name="rePasswordError">Hasła muszą być identyczne.</string>
+    <string name="nameError">Imię musi zaczynać się wielką literą, zawierać od 2 do 16 liter.</string>
+    <string name="countryError">Niepoprawny format państwa </string>
+    <string name="postCodeError">Niepoprawny format kodu pocztowego</string>
+    <string name="phoneError">Niepoprawny format numeru telefonu</string>
+    <string name="emailError">Niepoprawny format email</string>
 </resources>
