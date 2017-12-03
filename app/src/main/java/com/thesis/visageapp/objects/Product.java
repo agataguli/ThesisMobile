@@ -7,6 +7,9 @@ public class Product {
     private String brand;
     private Double grossValue;
     private Double netValue;
+    private String description;
+    private int quantity;
+    private boolean available = true;
 
     public String getProductId() {
         return productId;
@@ -79,9 +82,4 @@ public class Product {
     public void setAvailable(boolean available) {
         this.available = available;
     }
-
-    private String description;
-    private int quantity;
-    private boolean available = true;
-
 }

@@ -3,8 +3,6 @@ package com.thesis.visageapp.objects;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
-
 public class User {
     private String login;
     private String password;
