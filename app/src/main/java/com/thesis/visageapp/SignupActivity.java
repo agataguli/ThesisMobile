@@ -1,17 +1,9 @@
 package com.thesis.visageapp;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.thesis.visageapp.mobile.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -19,22 +11,28 @@ import butterknife.ButterKnife;
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
 
-    @Bind(R.id.input_name) EditText _nameText;
-    @Bind(R.id.input_address) EditText _addressText;
-    @Bind(R.id.input_email) EditText _emailText;
-    @Bind(R.id.input_mobile) EditText _mobileText;
-    @Bind(R.id.input_password) EditText _passwordText;
-    @Bind(R.id.input_reEnterPassword) EditText _reEnterPasswordText;
-    @Bind(R.id.btn_signup) Button _signupButton;
-    @Bind(R.id.link_login) TextView _loginLink;
-    
+    @Bind(R.id.input_pesel_r) EditText peselText;
+    @Bind(R.id.input_login_r) EditText loginText;
+    @Bind(R.id.input_password_r) EditText passwordText;
+    @Bind(R.id.input_rePassword_r) EditText rePasswordText;
+    @Bind(R.id.input_name_r) EditText nameText;
+    @Bind(R.id.input_surname_r) EditText surnameText;
+    @Bind(R.id.input_email_r) EditText emailText;
+    @Bind(R.id.input_phoneNumber_r) EditText phoneNumberText;
+    @Bind(R.id.input_country_r) EditText countryText;
+    @Bind(R.id.input_postCode_r) EditText postCodeText;
+    @Bind(R.id.input_city_r) EditText cityText;
+    @Bind(R.id.input_street_r) EditText streetText;
+    @Bind(R.id.input_addressDetails_r) EditText addressDetails;
+    @Bind(R.id.link_login_r) TextView loginLinkedText;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         ButterKnife.bind(this);
 
-        _signupButton.setOnClickListener(new View.OnClickListener() {
+        /*_signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signup();
@@ -157,5 +155,6 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         return valid;
+    }*/
     }
 }

@@ -3,4 +3,8 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="passwordError">Hasło musi zawierać od 8 do 16 znaków</string>
+    <string name="loginError">Login musi zawierać od 6 do 16 znaków.</string>
+    <string name="loginFailed">Błąd logowania, sprawdź poprawność danych logowania.</string>
+    <string name="authorizing">Trwa autoryzacja</string>
 </resources>
