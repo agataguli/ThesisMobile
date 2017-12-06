@@ -15,6 +15,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
 import com.thesis.visageapp.R;
 import com.thesis.visageapp.helpers.JsonHelper;
 import com.thesis.visageapp.helpers.UrlHelper;
@@ -86,14 +87,13 @@ public class LoginActivity extends AppCompatActivity {
         final String helpReq = UrlHelper.getUserLoginRequest(login, password, UrlHelper.AGATA_URL);
         final StringRequest stringRequest = new StringRequest(Request.Method.GET, helpReq, new Response.Listener<String>() {
 
-            // TODO: move this logic to VolleySingleton Class
             @Override
             public void onResponse(String response) {
                 User responseUser = JsonHelper.processUserStringJSON(response);
                 if (responseUser.getUserId().equals(getResources().getString(R.string.ERROR))) {
                     onLoginFailed();
                 } else {
-                    onLoginSuccess();
+                    onLoginSuccess(responseUser);
                 }
             }
         }, new Response.ErrorListener() {
@@ -122,9 +122,10 @@ public class LoginActivity extends AppCompatActivity {
         moveTaskToBack(true);
     }
 
-    public void onLoginSuccess() {
+    public void onLoginSuccess(User responseUser) {
         loginButton.setEnabled(true);
         Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+        intent.putExtra(getResources().getString(R.string.bundle_fields_user), new Gson().toJson(responseUser));
         startActivityForResult(intent, REQUEST_SIGNUP);
         finish();
     }

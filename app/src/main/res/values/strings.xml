@@ -18,4 +18,6 @@
     <string name="emailError">Niepoprawny format email</string>
     <string name="loginRequestError">Problem z autoryzacją. Sprawdź połączenie sieciowe.</string>
     <string name="ERROR">ERROR</string>
+    <string name="fields_user">user</string>
+    <string name="bundle_fields_user">user</string>
 </resources>
