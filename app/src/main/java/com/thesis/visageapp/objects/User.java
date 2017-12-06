@@ -1,9 +1,7 @@
 package com.thesis.visageapp.objects;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 public class User {
+    private String userId;
     private String login;
     private String password;
     private String name;
@@ -18,7 +16,26 @@ public class User {
     private boolean active;
 
     public User() {
+    }
 
+    public User(String userId, String login, String password, String name, String surname, String email, String phoneNumber, String country, String postCode, String city, String street, String addressDetails, boolean active) {
+        this.userId = userId;
+        this.login = login;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.country = country;
+        this.postCode = postCode;
+        this.city = city;
+        this.street = street;
+        this.addressDetails = addressDetails;
+        this.active = active;
+    }
+
+    public String getUserId() {
+        return userId;
     }
 
     public String getLogin() {
@@ -116,23 +133,4 @@ public class User {
     public void setActive(boolean active) {
         this.active = active;
     }
-
-    public JSONObject createJsonUser() throws JSONException {
-        JSONObject json = new JSONObject();
-
-        JSONObject userJson = new JSONObject();
-        userJson.put("login",login);
-        userJson.put("password",password);
-        userJson.put("name",name);
-        userJson.put("email",email);
-        userJson.put("phoneNumber",phoneNumber);
-        userJson.put("country",country);
-        userJson.put("postCode",postCode);
-        userJson.put("city",city);
-        userJson.put("street",street);
-        userJson.put("addressDetails",addressDetails);
-
-        return userJson;
-    }
-
 }

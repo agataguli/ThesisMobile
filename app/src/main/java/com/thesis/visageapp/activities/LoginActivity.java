@@ -1,4 +1,4 @@
-package com.thesis.visageapp;
+package com.thesis.visageapp.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -10,6 +10,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.thesis.visageapp.R;
+import com.thesis.visageapp.helpers.JsonHelper;
+import com.thesis.visageapp.helpers.UrlHelper;
+import com.thesis.visageapp.helpers.ValidateHelper;
+import com.thesis.visageapp.helpers.VolleySingleton;
+import com.thesis.visageapp.objects.User;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -67,31 +78,39 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage(this.getResources().getString(R.string.authorizing));
         progressDialog.show();
-
-        String email = loginText.getText().toString();
-        String password = passwordText.getText().toString();
-
-        // TODO: Implement your own authentication logic here.
-
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onLoginSuccess or onLoginFailed
-                        onLoginSuccess();
-                        // onLoginFailed();
-                        progressDialog.dismiss();
-                    }
-                }, 3000);
+        processLogin(this.loginText.getText().toString(),
+                this.passwordText.getText().toString());
     }
 
+    private void processLogin(String login, String password) {
+        final String helpReq = UrlHelper.getUserLoginRequest(login, password, UrlHelper.AGATA_URL);
+        final StringRequest stringRequest = new StringRequest(Request.Method.GET, helpReq, new Response.Listener<String>() {
+
+            // TODO: move this logic to VolleySingleton Class
+            @Override
+            public void onResponse(String response) {
+                User responseUser = JsonHelper.processUserStringJSON(response);
+                if (responseUser.getUserId().equals(getResources().getString(R.string.ERROR))) {
+                    onLoginFailed();
+                } else {
+                    onLoginSuccess();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, error.toString());
+                Toast.makeText(getBaseContext(), getResources().getString(R.string.loginRequestError),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_SIGNUP) {
             if (resultCode == RESULT_OK) {
-
-                // TODO: Implement successful signup logic here
-                // By default we just finish the Activity and log them in automatically
                 this.finish();
             }
         }
@@ -105,6 +124,8 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginSuccess() {
         loginButton.setEnabled(true);
+        Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+        startActivityForResult(intent, REQUEST_SIGNUP);
         finish();
     }
 
