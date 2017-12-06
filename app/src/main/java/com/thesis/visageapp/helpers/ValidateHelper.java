@@ -1,10 +1,8 @@
-package com.thesis.visageapp;
+package com.thesis.visageapp.helpers;
 
 import android.text.TextUtils;
 
 public class ValidateHelper {
-
-
     public static boolean isValidLogin(String s) {
         return !s.isEmpty() && s.length() > 5 && s.length() < 17;
     }

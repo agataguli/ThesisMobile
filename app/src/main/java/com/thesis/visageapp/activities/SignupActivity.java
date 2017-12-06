@@ -1,20 +1,18 @@
-package com.thesis.visageapp;
+package com.thesis.visageapp.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.thesis.visageapp.R;
+import com.thesis.visageapp.helpers.ValidateHelper;
 import com.thesis.visageapp.objects.User;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -81,7 +79,7 @@ public class SignupActivity extends AppCompatActivity {
         });
     }
 
-    public void signup() {
+    public void signup() { /*
         Log.d(TAG, "Signup processed");
 
        /* if (!this.validateRegisterData()) {
@@ -99,25 +97,6 @@ public class SignupActivity extends AppCompatActivity {
 
         // TODO: Implement your own signup logic here.
 
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        createNewUser();
-                        String postMessage = "";
-                        try {
-
-                            JSONObject userJson = user.createJsonUser();
-                            postMessage = userJson.toString();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                         new SendDeviceDetails().execute(postMessage);
-
-                        onSignupSuccess();
-                        // onSignupFailed();
-                        progressDialog.dismiss();
-                    }
-                }, 3000);
     }
 
 

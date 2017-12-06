@@ -16,4 +16,6 @@
     <string name="postCodeError">Niepoprawny format kodu pocztowego</string>
     <string name="phoneError">Niepoprawny format numeru telefonu</string>
     <string name="emailError">Niepoprawny format email</string>
+    <string name="loginRequestError">Problem z autoryzacją. Sprawdź połączenie sieciowe.</string>
+    <string name="ERROR">ERROR</string>
 </resources>
