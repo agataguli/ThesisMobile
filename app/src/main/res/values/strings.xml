@@ -28,4 +28,5 @@
     <string name="streetError">Ulica musi zaczynać się wielką literą i mieć od 2 do 32 znaków.</string>
     <string name="addressDetailsError">Numer domu nie może być pusty.</string>
     <string name="signupSuccess">Zaloguj się do swojego nowo utworzonego konta.</string>
+    <string name="splashScreen">SplashScreen</string>
 </resources>

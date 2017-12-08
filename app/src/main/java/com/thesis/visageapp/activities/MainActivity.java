@@ -3,22 +3,32 @@ package com.thesis.visageapp.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.thesis.visageapp.R;
-import com.thesis.visageapp.activities.LoginActivity;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 
 public class MainActivity extends AppCompatActivity {
+    private static final int splashTime = 3000;
+
+    @Bind(R.id.image_login_link_main_activity)
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
+        ActivityStarter starter = new ActivityStarter();
+        starter.start();
     }
 
     @Override
@@ -31,5 +41,29 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         return id == R.id.action_settings || super.onOptionsItemSelected(item);
+    }
+
+    private void startLoginActivity() {
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+    }
+
+    private class ActivityStarter extends Thread {
+        @Override
+        public void run() {
+            try {
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startLoginActivity();
+                    }
+                });
+                Thread.sleep(splashTime);
+            } catch (Exception e) {
+                Log.d(getResources().getString(R.string.splashScreen), e.getMessage());
+            }
+            startLoginActivity();
+        }
     }
 }
