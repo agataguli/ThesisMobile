@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -23,12 +24,16 @@ import com.thesis.visageapp.helpers.ValidateHelper;
 import com.thesis.visageapp.helpers.VolleySingleton;
 import com.thesis.visageapp.objects.User;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
+    private User user = new User();
 
     @Bind(R.id.input_login_l)
     EditText loginText;
@@ -49,7 +54,11 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                login();
+                try {
+                    login();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -64,36 +73,37 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void login() {
+    public void login() throws JSONException {
         Log.d(TAG, "Login processed");
 
         if (!validateLoginData()) {
             onLoginFailed();
             return;
         }
-
         loginButton.setEnabled(false);
-
         final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage(this.getResources().getString(R.string.authorizing));
         progressDialog.show();
-        processLogin(this.loginText.getText().toString(),
-                this.passwordText.getText().toString());
+        user.setLogin(this.loginText.getText().toString());
+        user.setPassword(this.passwordText.getText().toString());
+        this.processLogin();
+        progressDialog.hide();
     }
 
-    private void processLogin(String login, String password) {
-        final String helpReq = UrlHelper.getUserLoginRequest(login, password, UrlHelper.AGATA_URL);
-        final StringRequest stringRequest = new StringRequest(Request.Method.GET, helpReq, new Response.Listener<String>() {
+    private void processLogin() throws JSONException {
+        JSONObject jsonBody = new JSONObject(new Gson().toJson(this.user));
+        final String requestBody = jsonBody.toString();
 
+        final StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlHelper.getLoginUrl(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                User responseUser = JsonHelper.processUserStringJSON(response);
-                if (responseUser.getUserId().equals(getResources().getString(R.string.ERROR))) {
+                user = JsonHelper.processUserStringJSON(response);
+                if (user.getUserId().equals(getResources().getString(R.string.ERROR))) {
                     onLoginFailed();
                 } else {
-                    onLoginSuccess(responseUser);
+                    onLoginSuccess();
                 }
             }
         }, new Response.ErrorListener() {
@@ -103,7 +113,17 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(getBaseContext(), getResources().getString(R.string.loginRequestError),
                         Toast.LENGTH_SHORT).show();
             }
-        });
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                return requestBody == null ? null : requestBody.getBytes();
+            }
+        };
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
 
@@ -118,14 +138,13 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // make impossible going back to main activity
         moveTaskToBack(true);
     }
 
-    public void onLoginSuccess(User responseUser) {
+    public void onLoginSuccess() {
         loginButton.setEnabled(true);
         Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
-        intent.putExtra(getResources().getString(R.string.bundle_fields_user), new Gson().toJson(responseUser));
+        intent.putExtra(getResources().getString(R.string.bundle_fields_user), new Gson().toJson(this.user));
         startActivityForResult(intent, REQUEST_SIGNUP);
         finish();
     }
