@@ -75,7 +75,6 @@ public class LoginActivity extends AppCompatActivity {
 
     public void login() throws JSONException {
         Log.d(TAG, "Login processed");
-
         if (!validateLoginData()) {
             onLoginFailed();
             return;

@@ -11,7 +11,7 @@
     <string name="signingUp">Trwa zakładanie konta</string>
     <string name="peselError">Pesel musi zawierać 11 cyfr</string>
     <string name="rePasswordError">Hasła muszą być identyczne.</string>
-    <string name="nameError">Imię musi zaczynać się wielką literą, zawierać od 2 do 16 liter.</string>
+    <string name="nameError">Imię i Nazwisko muszą zaczynać się wielką literą, zawierać od 2 do 16 liter.</string>
     <string name="countryError">Niepoprawny format państwa </string>
     <string name="postCodeError">Niepoprawny format kodu pocztowego</string>
     <string name="phoneError">Niepoprawny format numeru telefonu</string>
@@ -21,4 +21,11 @@
     <string name="fields_user">user</string>
     <string name="bundle_fields_user">user</string>
     <string name="status_code_success">200</string>
+    <string name="status_code_signup_login_duplicate">Taki login już istnieje w systemie. Wybierz inny.</string>
+    <string name="status_code_signup_pesel_duplicate">Ten pesel jest w naszej bazie. Zaloguj się na istniejące konto.</string>
+    <string name="status_code_signup_email_duplicate">Ten email jest już w naszej bazie. Zaloguj się na istniejące konto.</string>
+    <string name="cityError">Miasto musi zaczynać się wielką literą i mieć od od 2 do 32 znaków.</string>
+    <string name="streetError">Ulica musi zaczynać się wielką literą i mieć od 2 do 32 znaków.</string>
+    <string name="addressDetailsError">Numer domu nie może być pusty.</string>
+    <string name="signupSuccess">Zaloguj się do swojego nowo utworzonego konta.</string>
 </resources>

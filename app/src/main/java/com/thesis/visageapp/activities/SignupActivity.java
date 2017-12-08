@@ -12,14 +12,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.thesis.visageapp.R;
+import com.thesis.visageapp.helpers.ResponseCodeHelper;
 import com.thesis.visageapp.helpers.UrlHelper;
 import com.thesis.visageapp.helpers.ValidateHelper;
 import com.thesis.visageapp.helpers.VolleySingleton;
@@ -68,8 +67,6 @@ public class SignupActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        user = new User();
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         ButterKnife.bind(this);
@@ -97,8 +94,13 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void signup() throws JSONException {
+        Log.d(TAG, "Login processed");
 
-        this.signUpButton.setEnabled(false);
+        /*if (!validateRegisterData()) {
+            onSignupFailed(ResponseCodeHelper.RESPONSE_CODE_FAIL);
+            return;
+        }
+        this.signUpButton.setEnabled(false); */
 
         final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this,
                 R.style.AppTheme_Dark_Dialog);
@@ -116,16 +118,16 @@ public class SignupActivity extends AppCompatActivity {
 
         final StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlHelper.getSignupUrl(),
                 new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                if(response == getResources().getString(R.string.status_code_success)) {
-                    onSignupSuccess();
-                }
-                else {
-                    onSignupFailed();
-                }
-            }
-        }, new Response.ErrorListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        int i =0;
+                        if (response.equals(ResponseCodeHelper.RESPONSE_CODE_SUCCESS)) {
+                            onSignupSuccess();
+                        } else {
+                            onSignupFailed(response);
+                        }
+                    }
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(TAG, error.toString());
@@ -142,15 +144,6 @@ public class SignupActivity extends AppCompatActivity {
             public byte[] getBody() throws AuthFailureError {
                 return requestBody == null ? null : requestBody.getBytes();
             }
-
-            @Override
-            protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                String responseString = "";
-                if (response != null) {
-                    responseString = String.valueOf(response.statusCode);
-                }
-                return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
-            }
         };
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
@@ -158,6 +151,8 @@ public class SignupActivity extends AppCompatActivity {
 
     public void onSignupSuccess() {
         signUpButton.setEnabled(true);
+        Toast.makeText(getBaseContext(), getResources().getString(R.string.signupSuccess),
+                Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK, null);
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
@@ -179,8 +174,20 @@ public class SignupActivity extends AppCompatActivity {
         user.setAddressDetails(addressDetailsText.getText().toString());
     }
 
-    public void onSignupFailed() {
-        Toast.makeText(getBaseContext(), this.getResources().getString(R.string.signUpFailed), Toast.LENGTH_SHORT).show();
+    public void onSignupFailed(String responseCode) {
+        String errorToast = this.getResources().getString(R.string.signUpFailed);
+        if (responseCode.equals(ResponseCodeHelper.RESPONSE_CODE_ERROR_SIGNUP_LOGIN_DUPLICATE)) {
+            getResources().getString(R.string.status_code_signup_login_duplicate);
+        } else {
+            if (responseCode.equals(ResponseCodeHelper.RESPONSE_CODE_ERROR_SIGNUP_PESEL_DUPLICATE)) {
+                getResources().getString(R.string.status_code_signup_pesel_duplicate);
+            } else {
+                if (responseCode.equals(ResponseCodeHelper.RESPONSE_CODE_ERROR_SIGNUP_EMAIL_DUPLICATE)) {
+                    getResources().getString(R.string.status_code_signup_email_duplicate);
+                }
+            }
+        }
+        Toast.makeText(getBaseContext(), errorToast, Toast.LENGTH_SHORT).show();
         signUpButton.setEnabled(true);
     }
 
@@ -198,8 +205,8 @@ public class SignupActivity extends AppCompatActivity {
             this.passwordText.setError(this.getResources().getString(R.string.passwordError));
             isValidate = false;
         }
-        if (!ValidateHelper.isValidRePassword(this.passwordText.getText().toString(),
-                this.rePasswordText.getText().toString())) {
+        if (!ValidateHelper.isValidRePassword(this.rePasswordText.getText().toString(),
+                this.passwordText.getText().toString())) {
             this.rePasswordText.setError(this.getResources().getString(R.string.rePasswordError));
             isValidate = false;
         }
@@ -207,24 +214,36 @@ public class SignupActivity extends AppCompatActivity {
             this.nameText.setError(this.getResources().getString(R.string.nameError));
             isValidate = false;
         }
-        if (!ValidateHelper.isValidNameSurname(this.nameText.getText().toString())) {
+        if (!ValidateHelper.isValidNameSurname(this.surnameText.getText().toString())) {
             this.surnameText.setError(this.getResources().getString(R.string.nameError));
             isValidate = false;
         }
-        if (!ValidateHelper.isValidEmail(this.nameText.getText().toString())) {
+        if (!ValidateHelper.isValidEmail(this.emailText.getText().toString())) {
             this.emailText.setError(this.getResources().getString(R.string.emailError));
             isValidate = false;
         }
-        if (!ValidateHelper.isValidPhoneNumber(this.nameText.getText().toString())) {
+        if (!ValidateHelper.isValidPhoneNumber(this.phoneNumberText.getText().toString())) {
             this.phoneNumberText.setError(this.getResources().getString(R.string.phoneError));
             isValidate = false;
         }
-        if (!ValidateHelper.isValidCountry(this.nameText.getText().toString())) {
+        if (!ValidateHelper.isValidCountry(this.countryText.getText().toString())) {
             this.countryText.setError(this.getResources().getString(R.string.countryError));
             isValidate = false;
         }
-        if (!ValidateHelper.isValidPostCode(this.nameText.getText().toString())) {
+        if (!ValidateHelper.isValidPostCode(this.postCodeText.getText().toString())) {
             this.postCodeText.setError(this.getResources().getString(R.string.postCodeError));
+            isValidate = false;
+        }
+        if (!ValidateHelper.isValidCity(this.cityText.getText().toString())) {
+            this.cityText.setError(this.getResources().getString(R.string.cityError));
+            isValidate = false;
+        }
+        if (!ValidateHelper.isValidStreet(this.streetText.getText().toString())) {
+            this.streetText.setError(this.getResources().getString(R.string.streetError));
+            isValidate = false;
+        }
+        if (!ValidateHelper.isValidAddressDetails(this.addressDetailsText.getText().toString())) {
+            this.addressDetailsText.setError(this.getResources().getString(R.string.addressDetailsError));
             isValidate = false;
         }
         return isValidate;
