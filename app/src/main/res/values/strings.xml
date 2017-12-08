@@ -20,4 +20,5 @@
     <string name="ERROR">ERROR</string>
     <string name="fields_user">user</string>
     <string name="bundle_fields_user">user</string>
+    <string name="status_code_success">200</string>
 </resources>

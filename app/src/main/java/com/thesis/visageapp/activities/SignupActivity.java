@@ -4,22 +4,36 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
 import com.thesis.visageapp.R;
+import com.thesis.visageapp.helpers.UrlHelper;
 import com.thesis.visageapp.helpers.ValidateHelper;
+import com.thesis.visageapp.helpers.VolleySingleton;
 import com.thesis.visageapp.objects.User;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
-    private User user;
+    private User user = new User();
 
     @Bind(R.id.input_pesel_r)
     EditText peselText;
@@ -46,7 +60,7 @@ public class SignupActivity extends AppCompatActivity {
     @Bind(R.id.input_street_r)
     EditText streetText;
     @Bind(R.id.input_addressDetails_r)
-    EditText addressDetails;
+    EditText addressDetailsText;
     @Bind(R.id.link_login_r)
     TextView loginLinkedText;
     @Bind(R.id.button_signup_r)
@@ -63,14 +77,17 @@ public class SignupActivity extends AppCompatActivity {
         this.signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signup();
+                try {
+                    signup();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
         this.loginLinkedText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Finish the registration screen and return to the Login activity
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
                 finish();
@@ -79,13 +96,7 @@ public class SignupActivity extends AppCompatActivity {
         });
     }
 
-    public void signup() { /*
-        Log.d(TAG, "Signup processed");
-
-       /* if (!this.validateRegisterData()) {
-            onSignupFailed();
-            return;
-        }*/
+    public void signup() throws JSONException {
 
         this.signUpButton.setEnabled(false);
 
@@ -94,21 +105,67 @@ public class SignupActivity extends AppCompatActivity {
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage(this.getResources().getString(R.string.signingUp));
         progressDialog.show();
-
-        // TODO: Implement your own signup logic here.
-
+        this.prepareFormUser();
+        this.processSignup();
+        progressDialog.hide();
     }
 
+    private void processSignup() throws JSONException {
+        JSONObject jsonBody = new JSONObject(new Gson().toJson(this.user));
+        final String requestBody = jsonBody.toString();
 
+        final StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlHelper.getSignupUrl(),
+                new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(response == getResources().getString(R.string.status_code_success)) {
+                    onSignupSuccess();
+                }
+                else {
+                    onSignupFailed();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, error.toString());
+                Toast.makeText(getBaseContext(), getResources().getString(R.string.loginRequestError),
+                        Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                return requestBody == null ? null : requestBody.getBytes();
+            }
+
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                String responseString = "";
+                if (response != null) {
+                    responseString = String.valueOf(response.statusCode);
+                }
+                return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+            }
+        };
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+    }
 
 
     public void onSignupSuccess() {
         signUpButton.setEnabled(true);
         setResult(RESULT_OK, null);
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
         finish();
     }
 
-    public void createNewUser() {
+    public void prepareFormUser() {
+        user.setUserId(peselText.getText().toString());
         user.setName(nameText.getText().toString());
         user.setLogin(loginText.getText().toString());
         user.setPassword(passwordText.getText().toString());
@@ -119,7 +176,7 @@ public class SignupActivity extends AppCompatActivity {
         user.setPostCode(postCodeText.getText().toString());
         user.setCity(cityText.getText().toString());
         user.setStreet(streetText.getText().toString());
-        user.setAddressDetails(addressDetails.getText().toString());
+        user.setAddressDetails(addressDetailsText.getText().toString());
     }
 
     public void onSignupFailed() {

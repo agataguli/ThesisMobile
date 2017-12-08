@@ -13,12 +13,12 @@ public class User {
     private String city;
     private String street;
     private String addressDetails;
-    private boolean active;
+    private boolean active = true;
 
     public User() {
     }
 
-    public User(String userId, String login, String password, String name, String surname, String email, String phoneNumber, String country, String postCode, String city, String street, String addressDetails, boolean active) {
+    public User(String userId, String login, String password, String name, String surname, String email, String phoneNumber, String country, String postCode, String city, String street, String addressDetails) {
         this.userId = userId;
         this.login = login;
         this.password = password;
@@ -31,11 +31,21 @@ public class User {
         this.city = city;
         this.street = street;
         this.addressDetails = addressDetails;
+        this.active = true;
+    }
+
+    public User(String userId, String login, String password, String name, String surname, String email, String phoneNumber, String country, String postCode, String city, String street, String addressDetails, boolean active) {
+        this(userId, login, password, name, surname, email, phoneNumber, country, postCode, city, street, addressDetails);
         this.active = active;
     }
 
     public String getUserId() {
         return userId;
+    }
+
+
+    public void setUserId(String pesel) {
+        this.userId = pesel;
     }
 
     public String getLogin() {
