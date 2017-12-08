@@ -43,13 +43,8 @@ public class MainActivity extends AppCompatActivity {
         return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
-    private void startLoginActivity() {
-        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-        startActivity(intent);
-        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-    }
-
     private class ActivityStarter extends Thread {
+        private boolean loginActivityStarted = false;
         @Override
         public void run() {
             try {
@@ -63,7 +58,15 @@ public class MainActivity extends AppCompatActivity {
             } catch (Exception e) {
                 Log.d(getResources().getString(R.string.splashScreen), e.getMessage());
             }
-            startLoginActivity();
+            if(!loginActivityStarted) startLoginActivity();
+        }
+
+        private void startLoginActivity() {
+            this.loginActivityStarted = true;
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+            finish();
+            overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
         }
     }
 }
