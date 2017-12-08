@@ -96,11 +96,11 @@ public class SignupActivity extends AppCompatActivity {
     public void signup() throws JSONException {
         Log.d(TAG, "Login processed");
 
-        /*if (!validateRegisterData()) {
+        if (!validateRegisterData()) {
             onSignupFailed(ResponseCodeHelper.RESPONSE_CODE_FAIL);
             return;
         }
-        this.signUpButton.setEnabled(false); */
+        this.signUpButton.setEnabled(false);
 
         final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this,
                 R.style.AppTheme_Dark_Dialog);
@@ -120,7 +120,6 @@ public class SignupActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        int i =0;
                         if (response.equals(ResponseCodeHelper.RESPONSE_CODE_SUCCESS)) {
                             onSignupSuccess();
                         } else {
