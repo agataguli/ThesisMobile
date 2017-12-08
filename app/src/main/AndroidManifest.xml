@@ -25,7 +25,9 @@
         <activity
             android:name=".activities.SignupActivity"
             android:theme="@style/AppTheme.Dark" />
-        <activity android:name=".activities.MenuActivity"></activity>
+        <activity
+            android:name=".activities.MenuActivity"
+            android:theme="@style/AppTheme.White"/>
     </application>
 
 </manifest>
