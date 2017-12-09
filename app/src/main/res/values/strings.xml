@@ -29,4 +29,9 @@
     <string name="addressDetailsError">Numer domu nie może być pusty.</string>
     <string name="signupSuccess">Zaloguj się do swojego nowo utworzonego konta.</string>
     <string name="splashScreen">SplashScreen</string>
+    <string name="products">Produkty</string>
+    <string name="favorite_products">Ulubione</string>
+    <string name="order_history">Historia zamówień</string>
+    <string name="my_account">Moje konto</string>
+    <string name="logout">Wyloguj</string>
 </resources>

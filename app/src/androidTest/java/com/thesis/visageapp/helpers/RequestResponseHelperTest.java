@@ -5,9 +5,7 @@ import com.thesis.visageapp.objects.User;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
-public class JsonHelperTest extends TestCase {
-
-
+public class RequestResponseHelperTest extends TestCase {
     public void testProcessCreatingUserFromJsonStringWithSuccess() throws Exception {
         // given
         String testPhrase = "test";
@@ -42,7 +40,7 @@ public class JsonHelperTest extends TestCase {
                 "  ]\n" +
                 "}";
         // when
-        User testUser = JsonHelper.processUserStringJSON(jsonString);
+        User testUser = RequestResponseHelper.processUserStringJSON(jsonString);
 
         // then
         Assert.assertEquals(testUser.getLogin(),testPhrase);
@@ -59,5 +57,4 @@ public class JsonHelperTest extends TestCase {
         Assert.assertEquals(testUser.isActive(),true);
         // throw no exception
     }
-
 }

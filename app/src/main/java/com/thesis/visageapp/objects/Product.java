@@ -9,6 +9,7 @@ public class Product {
     private Double netValue;
     private String description;
     private int quantity;
+    private String imageLink;
     private boolean available = true;
 
     public String getProductId() {
@@ -81,5 +82,13 @@ public class Product {
 
     public void setAvailable(boolean available) {
         this.available = available;
+    }
+
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
     }
 }
