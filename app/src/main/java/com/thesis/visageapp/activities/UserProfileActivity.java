@@ -1,6 +1,7 @@
 package com.thesis.visageapp.activities;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -8,10 +9,27 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
 import com.thesis.visageapp.R;
 import com.thesis.visageapp.helpers.RequestResponseHelper;
+import com.thesis.visageapp.helpers.UrlHelper;
+import com.thesis.visageapp.helpers.ValidateHelper;
+import com.thesis.visageapp.helpers.VolleySingleton;
 import com.thesis.visageapp.objects.User;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,7 +39,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private User user = new User();
     private Bundle extras = new Bundle();
     private boolean onlyPreview = true;
-    private final ProgressDialog progressDialog = new ProgressDialog(UserProfileActivity.this, R.style.AppTheme_Dark_Dialog);
+    private ProgressDialog progressDialog;
 
     @Bind(R.id.textview_login_u)
     TextView loginTextView;
@@ -61,6 +79,7 @@ public class UserProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
         ButterKnife.bind(this);
+        this.progressDialog = new ProgressDialog(UserProfileActivity.this, R.style.AppTheme_Dark_Dialog);
 
         this.extras = getIntent().getExtras();
         if (this.extras != null) {
@@ -76,7 +95,17 @@ public class UserProfileActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                changeBasicUserData();
+                try {
+                    changeBasicUserData();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (InvalidKeyException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -99,25 +128,99 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private void deleteUserAccount() {
         Log.d(TAG, "Removing user account processed");
+        this.progressDialog.show();
         this.setButtonsEnable(this.deleteAccountButton);
-        this.setPasswordInputsVisibleAndEnable(!this.onlyPreview);
+        this.setPasswordInputsEnableAndVisible(!this.onlyPreview, View.VISIBLE);
+        this.progressDialog.hide();
     }
 
     private void changeUserPassword() {
         Log.d(TAG, "Changing password processed");
+        this.progressDialog.show();
         this.setButtonsEnable(this.changePasswordButton);
-        this.setPasswordInputsVisibleAndEnable(!this.onlyPreview);
+        this.setPasswordInputsEnableAndVisible(!this.onlyPreview, View.VISIBLE);
+        this.progressDialog.hide();
     }
 
-    private void changeBasicUserData() {
+    private void changeBasicUserData() throws JSONException, UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException {
         Log.d(TAG, "Changing credentials processed");
-        this.setBasicTextInputsEnable(this.onlyPreview);
-        this.setButtonsEnable(this.changeCredentialsButton);
-        this.setPasswordInputsVisibleAndEnable(!this.onlyPreview);
+        this.onlyPreview = !this.onlyPreview;
+        if(!onlyPreview) {
+            this.setPasswordInputsEnableAndVisible(!this.onlyPreview, View.VISIBLE);
+            this.setButtonsEnable(!onlyPreview, onlyPreview, onlyPreview);
+            this.setBasicTextInputsEnable(!onlyPreview);
+        } else {
+            if (!ValidateHelper.validateUpdateData(passwordText, rePasswordText, nameText, surnameText, emailText,
+                    phoneNumberText, countryText, postCodeText, cityText, streetText, addressDetailsText, this)) {
+                this.onUpdateFailed(RequestResponseHelper.RESPONSE_CODE_FAIL);
+                return;
+            }
+            this.progressDialog.show();
+            this.processUpdateUserData();
+            this.progressDialog.hide();
+        }
+    }
+
+    private void onUpdateFailed(String responseCode) {
+        String errorToast = this.getResources().getString(R.string.update_client_data_failed);
+        if (responseCode.equals(RequestResponseHelper.RESPONSE_CODE_ERROR_UPDATE_EMAIL_DUPLICATE)) {
+            getResources().getString(R.string.status_code_update_email_duplicate);
+        } else {
+            if (responseCode.equals(RequestResponseHelper.RESPONSE_CODE_ERROR_UPDATE_INCORRECT_PASSWORD)) {
+                getResources().getString(R.string.status_code_update_incorrect_password);
+            }
+        }
+        Toast.makeText(getBaseContext(), errorToast, Toast.LENGTH_SHORT).show();
+    }
+
+    private void processUpdateUserData() throws JSONException, UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException {
+        this.prepareFormUser();
+        JSONObject jsonBody = new JSONObject(new Gson().toJson(this.user));
+        final String requestBody = jsonBody.toString();
+
+        final StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlHelper.getUpdateUrl(),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response.equals(RequestResponseHelper.RESPONSE_CODE_SUCCESS)) {
+                            onUpdateSucess();
+                        } else {
+                            onUpdateFailed(response);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, error.toString());
+                Toast.makeText(getBaseContext(), getResources().getString(R.string.loginRequestError),
+                        Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                return requestBody == null ? null : requestBody.getBytes();
+            }
+        };
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+    }
+
+    private void onUpdateSucess() {
+        Toast.makeText(getBaseContext(), getResources().getString(R.string.update_success),
+                Toast.LENGTH_SHORT).show();
+        setResult(RESULT_OK, null);
+        Intent intent = new Intent(this, UserProfileActivity.class);
+        intent.putExtras(extras);
+        intent.putExtra(RequestResponseHelper.USER_BUNDLE, new Gson().toJson(this.user));
+        startActivity(intent);
+        finish();
     }
 
     private void setButtonsEnable(Button pressedButton) {
-        this.onlyPreview = !this.onlyPreview;
         if (this.onlyPreview) {
             this.setButtonsEnable(true, true, true);
             this.restoreTextOfButtons();
@@ -153,9 +256,7 @@ public class UserProfileActivity extends AppCompatActivity {
         this.deleteAccountButton.setEnabled(b3);
     }
 
-    private void setPasswordInputsVisibleAndEnable(boolean enable) {
-        int visible = View.GONE;
-        if(enable) visible = View.VISIBLE;
+    private void setPasswordInputsEnableAndVisible(boolean enable, int visible) {
         this.passwordText.setVisibility(visible);
         this.passwordText.setEnabled(enable);
         this.rePasswordText.setVisibility(visible);
@@ -177,9 +278,6 @@ public class UserProfileActivity extends AppCompatActivity {
         addressDetailsText.setEnabled(val);
     }
 
-    //ValidateHelper.validateUserData(peselText, loginText, passwordText, rePasswordText, nameText, surnameText,
-    //emailText, phoneNumberText, countryText, postCodeText, cityText, streetText, addressDetailsText, this))
-
     private void prepareFormFromUser() {
         loginTextView.setText(user.getLogin());
         nameText.setText(user.getName());
@@ -191,5 +289,20 @@ public class UserProfileActivity extends AppCompatActivity {
         cityText.setText(user.getCity());
         streetText.setText(user.getStreet());
         addressDetailsText.setText(user.getAddressDetails());
+    }
+
+    public void prepareFormUser() throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException {
+        user.setUserId(this.user.getUserId());
+        user.setName(nameText.getText().toString());
+        user.setLogin(this.user.getLogin());
+        user.setPassword(RequestResponseHelper.hashMessage(this.passwordText.getText().toString()));
+        user.setSurname(surnameText.getText().toString());
+        user.setEmail(emailText.getText().toString());
+        user.setPhoneNumber(phoneNumberText.getText().toString());
+        user.setCountry(countryText.getText().toString());
+        user.setPostCode(postCodeText.getText().toString());
+        user.setCity(cityText.getText().toString());
+        user.setStreet(streetText.getText().toString());
+        user.setAddressDetails(addressDetailsText.getText().toString());
     }
 }

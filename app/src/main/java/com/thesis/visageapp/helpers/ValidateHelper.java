@@ -2,6 +2,7 @@ package com.thesis.visageapp.helpers;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.EditText;
 
 import com.thesis.visageapp.R;
@@ -56,26 +57,22 @@ public class ValidateHelper {
         return !s.isEmpty();
     }
 
-    public static boolean validateUserData(EditText peselText, EditText loginText, EditText passwordText,
-                                           EditText rePasswordText, EditText nameText, EditText surnameText,
-                                           EditText emailText, EditText phoneNumberText, EditText countryText,
-                                           EditText postCodeText, EditText cityText, EditText streetText,
-                                           EditText addressDetailsText, Context context) {
+    public static boolean validateUpdateData(EditText passwordText, EditText rePasswordText, EditText nameText,
+                              EditText surnameText, EditText emailText, EditText phoneNumberText,
+                              EditText countryText, EditText postCodeText, EditText cityText,
+                              EditText streetText, EditText addressDetailsText, Context context) {
         boolean isValidate = true;
-        if (!ValidateHelper.isValidatePesel(peselText.getText().toString())) {
-            peselText.setError(context.getString(R.string.peselError));
-            isValidate = false;
-        }
-        if (!ValidateHelper.isValidLogin(loginText.getText().toString())) {
-            loginText.setError(context.getString(R.string.loginError));
-            isValidate = false;
-        }
         if (!ValidateHelper.isValidPassword(passwordText.getText().toString())) {
+            String p = passwordText.getText().toString();
+            Log.d("ad",p);
             passwordText.setError(context.getString(R.string.passwordError));
             isValidate = false;
         }
         if (!ValidateHelper.isValidRePassword(rePasswordText.getText().toString(),
                 passwordText.getText().toString())) {
+            String p = passwordText.getText().toString();
+            Log.d("ad",p);
+
             rePasswordText.setError(context.getString(R.string.rePasswordError));
             isValidate = false;
         }
@@ -115,6 +112,25 @@ public class ValidateHelper {
             addressDetailsText.setError(context.getString(R.string.addressDetailsError));
             isValidate = false;
         }
+        return isValidate;
+    }
+
+    public static boolean validateUserData(EditText peselText, EditText loginText, EditText passwordText,
+                                           EditText rePasswordText, EditText nameText, EditText surnameText,
+                                           EditText emailText, EditText phoneNumberText, EditText countryText,
+                                           EditText postCodeText, EditText cityText, EditText streetText,
+                                           EditText addressDetailsText, Context context) {
+        boolean isValidate = true;
+        if (!ValidateHelper.isValidatePesel(peselText.getText().toString())) {
+            peselText.setError(context.getString(R.string.peselError));
+            isValidate = false;
+        }
+        if (!ValidateHelper.isValidLogin(loginText.getText().toString())) {
+            loginText.setError(context.getString(R.string.loginError));
+            isValidate = false;
+        }
+        isValidate = isValidate && validateUpdateData(passwordText,rePasswordText,nameText,surnameText,
+                emailText,phoneNumberText,countryText,postCodeText,cityText,streetText,addressDetailsText,context);
         return isValidate;
     }
 }

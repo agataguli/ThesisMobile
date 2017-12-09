@@ -8,13 +8,17 @@ public class UrlHelper {
     private static final String URL_USERS = "/users";
     private static final String URL_LOGIN = "/loginM";
     private static final String URL_SIGNUP = "/signupM";
+    private static final String URL_UPDATE = "/updateM";
 
     public static String getLoginUrl() {
         return ROOT_URL + URL_USERS + URL_LOGIN;
     }
 
-
     public static String getSignupUrl() {
         return ROOT_URL + URL_USERS + URL_SIGNUP;
+    }
+
+    public static String getUpdateUrl() {
+        return ROOT_URL + URL_USERS + URL_UPDATE;
     }
 }

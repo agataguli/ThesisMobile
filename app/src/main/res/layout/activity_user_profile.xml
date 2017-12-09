@@ -181,7 +181,7 @@
                 android:enabled="true"
                 android:textColor="@color/primary_darkest_white_skin"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
+                android:inputType="textPassword"
                 android:hint="@string/password" />
         </android.support.design.widget.TextInputLayout>
 
@@ -196,7 +196,7 @@
                 android:enabled="true"
                 android:textColor="@color/primary_darkest_white_skin"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
+                android:inputType="textPassword"
                 android:hint="@string/repeatPassword" />
         </android.support.design.widget.TextInputLayout>
 

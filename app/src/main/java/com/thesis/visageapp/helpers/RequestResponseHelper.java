@@ -14,20 +14,21 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 public class RequestResponseHelper {
-    public static String RESPONSE_CODE_SUCCESS = "200";
-    public static String RESPONSE_CODE_FAIL = "201";
+    public static final String RESPONSE_CODE_SUCCESS = "200";
+    public static final String RESPONSE_CODE_FAIL = "201";
 
-    public static String RESPONSE_CODE_ERROR_SIGNUP_LOGIN_DUPLICATE = "300";
-    public static String RESPONSE_CODE_ERROR_SIGNUP_PESEL_DUPLICATE = "301";
-    public static String RESPONSE_CODE_ERROR_SIGNUP_EMAIL_DUPLICATE = "301";
+    public static final String RESPONSE_CODE_ERROR_SIGNUP_LOGIN_DUPLICATE = "300";
+    public static final String RESPONSE_CODE_ERROR_SIGNUP_PESEL_DUPLICATE = "301";
+    public static final String RESPONSE_CODE_ERROR_SIGNUP_EMAIL_DUPLICATE = "301";
 
-    public static String RESPONSE_CODE_ERROR_UPDATE_EMAIL_DUPLICATE = "400";
+    public static final String RESPONSE_CODE_ERROR_UPDATE_INCORRECT_PASSWORD = "400";
+    public static final String RESPONSE_CODE_ERROR_UPDATE_EMAIL_DUPLICATE = "401";
 
-    private static String keyString = "inzyniery2017";
-    private static String encMeth = "HmacSHA1";
-    private static String charEnc = "UTF-8";
-    public static String USER_BUNDLE = "userbundle";
-    public static String USER_ID = "userid";
+    private static final String keyString = "inzyniery2017";
+    private static final String encMeth = "HmacSHA1";
+    private static final String charEnc = "UTF-8";
+    public static final String USER_BUNDLE = "userbundle";
+    public static final String USER_ID = "userid";
 
     public static User processUserStringJSON(String JSON) {
         Gson gson = new GsonBuilder().create();
