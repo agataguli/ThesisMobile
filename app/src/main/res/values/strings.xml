@@ -34,4 +34,20 @@
     <string name="order_history">Historia zamówień</string>
     <string name="my_account">Moje konto</string>
     <string name="logout">Wyloguj</string>
+    <string name="fields_user_login">login</string>
+    <string name="text_link_signup_have_account">Masz już konto? Zaloguj się</string>
+    <string name="sign_up_signup">Utwórz konto</string>
+    <string name="repeatPassword">Powtórz hasło</string>
+    <string name="password">Hasło</string>
+    <string name="addressDetails">Numer domu</string>
+    <string name="street">Ulica</string>
+    <string name="city">Miejscowość</string>
+    <string name="postCode">Kod pocztowy</string>
+    <string name="country">Kraj</string>
+    <string name="phoneNumber">Numer telefonu</string>
+    <string name="email">Email</string>
+    <string name="surname">Nazwisko</string>
+    <string name="name">Imię</string>
+    <string name="login">Login</string>
+    <string name="pesel">Pesel</string>
 </resources>

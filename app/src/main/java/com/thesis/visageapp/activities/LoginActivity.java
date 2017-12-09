@@ -147,7 +147,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onLoginSuccess() {
         loginButton.setEnabled(true);
         Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
-        intent.putExtra(getResources().getString(R.string.bundle_fields_user), new Gson().toJson(this.user));
+        intent.putExtra(RequestResponseHelper.USER_BUNDLE, new Gson().toJson(this.user));
         startActivityForResult(intent, REQUEST_SIGNUP);
         finish();
     }
