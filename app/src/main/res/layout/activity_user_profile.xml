@@ -197,7 +197,7 @@
                 android:textColor="@color/primary_darkest_white_skin"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="@string/repeatPassword" />
+                android:hint="@string/repeatPasswordOrInserNew" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.v7.widget.AppCompatButton
@@ -230,12 +230,22 @@
             android:textColor="@color/primary_darker"
             android:text="@string/deleteAccount"/>
 
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/button_back_u"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/primary_white_skin"
+            android:textColor="@color/primary_darker"
+            android:text="@string/back"/>
+
         <TextView android:id="@+id/textview_hint_u"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             android:textColor="@color/iron"
-            android:text="@string/text_hint_default"
+            android:text="@string/text_hint_default_tip"
             android:gravity="center"
             android:textSize="16dip"/>
 

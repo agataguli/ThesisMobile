@@ -1,6 +1,5 @@
 package com.thesis.visageapp.activities;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -39,7 +38,6 @@ public class UserProfileActivity extends AppCompatActivity {
     private User user = new User();
     private Bundle extras = new Bundle();
     private boolean onlyPreview = true;
-    private ProgressDialog progressDialog;
 
     @Bind(R.id.textview_login_u)
     TextView loginTextView;
@@ -73,13 +71,14 @@ public class UserProfileActivity extends AppCompatActivity {
     Button deleteAccountButton;
     @Bind(R.id.textview_hint_u)
     TextView hintTextView;
+    @Bind(R.id.button_back_u)
+    Button backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
         ButterKnife.bind(this);
-        this.progressDialog = new ProgressDialog(UserProfileActivity.this, R.style.AppTheme_Dark_Dialog);
 
         this.extras = getIntent().getExtras();
         if (this.extras != null) {
@@ -87,65 +86,192 @@ public class UserProfileActivity extends AppCompatActivity {
                     RequestResponseHelper.USER_BUNDLE));
             this.prepareFormFromUser();
         }
-        this.progressDialog.setIndeterminate(true);
-        this.progressDialog.setMessage(this.getResources().getString(R.string.authorizing));
-
 
         this.changeCredentialsButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 try {
                     changeBasicUserData();
-                } catch (JSONException e) {
+                } catch (JSONException | NoSuchAlgorithmException | UnsupportedEncodingException | InvalidKeyException e) {
                     e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
+                }
+            }
+        });
+        this.changePasswordButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                try {
+                    changeUserPassword();
+                } catch (JSONException | UnsupportedEncodingException | NoSuchAlgorithmException | InvalidKeyException e) {
                     e.printStackTrace();
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                } catch (InvalidKeyException e) {
+                }
+            }
+        });
+        this.deleteAccountButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                try {
+                    deleteUserAccount();
+                } catch (JSONException | UnsupportedEncodingException | NoSuchAlgorithmException | InvalidKeyException e) {
                     e.printStackTrace();
                 }
             }
         });
 
-        this.changePasswordButton.setOnClickListener(new View.OnClickListener() {
-
+        this.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeUserPassword();
-            }
-        });
-
-        this.deleteAccountButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                deleteUserAccount();
+                restartActivity();
             }
         });
     }
 
-    private void deleteUserAccount() {
+    private void deleteUserAccount() throws InvalidKeyException, NoSuchAlgorithmException, JSONException, UnsupportedEncodingException {
         Log.d(TAG, "Removing user account processed");
-        this.progressDialog.show();
-        this.setButtonsEnable(this.deleteAccountButton);
-        this.setPasswordInputsEnableAndVisible(!this.onlyPreview, View.VISIBLE);
-        this.progressDialog.hide();
+        if (onlyPreview) {
+            this.onlyPreview = !this.onlyPreview;
+            this.setPasswordInputsEnableAndVisible(!this.onlyPreview, View.VISIBLE);
+            this.setButtonsEnable(onlyPreview, onlyPreview, !onlyPreview);
+        } else {
+            if (!ValidateHelper.validateUpdateData(passwordText, rePasswordText, nameText, surnameText, emailText,
+                    phoneNumberText, countryText, postCodeText, cityText, streetText, addressDetailsText, this)) {
+                this.onUpdateFailed(RequestResponseHelper.RESPONSE_CODE_FAIL);
+                return;
+            }
+            this.processRemoveUserAccount();
+        }
     }
 
-    private void changeUserPassword() {
+    private void processRemoveUserAccount() throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException, JSONException {
+        JSONObject jsonBody = new JSONObject(new Gson().toJson(this.user));
+        final String requestBody = jsonBody.toString();
+
+        final StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlHelper.getRemoveUrl(),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response.equals(RequestResponseHelper.RESPONSE_CODE_SUCCESS)) {
+                            onRemoveSuccess();
+                        } else {
+                            onRemoveFailed(response);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, error.toString());
+                Toast.makeText(getBaseContext(), getResources().getString(R.string.loginRequestError),
+                        Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                return requestBody == null ? null : requestBody.getBytes();
+            }
+        };
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+    }
+
+    private void onRemoveFailed(String responseCode) {
+        String errorToast = this.getResources().getString(R.string.delete_account_failed);
+        if (responseCode.equals(RequestResponseHelper.RESPONSE_CODE_ERROR_INCORRECT_OLD_PASSWORD)) {
+            getResources().getString(R.string.status_code_change_incorrect_old_password);
+        }
+        Toast.makeText(getBaseContext(), errorToast, Toast.LENGTH_SHORT).show();
+    }
+
+    private void onRemoveSuccess() {
+        Toast.makeText(getBaseContext(), getResources().getString(R.string.deleteAccount_success),
+                Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, LoginActivity.class);
+        this.user = null;
+        this.extras = null;
+        startActivity(intent);
+        finish();
+    }
+
+    private void changeUserPassword() throws JSONException, UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException {
         Log.d(TAG, "Changing password processed");
-        this.progressDialog.show();
-        this.setButtonsEnable(this.changePasswordButton);
-        this.setPasswordInputsEnableAndVisible(!this.onlyPreview, View.VISIBLE);
-        this.progressDialog.hide();
+        if (onlyPreview) {
+            this.onlyPreview = !this.onlyPreview;
+            this.setPasswordInputsEnableAndVisible(!this.onlyPreview, View.VISIBLE);
+            this.setButtonsEnable(onlyPreview, !onlyPreview, onlyPreview);
+            this.rePasswordText.setText(getResources().getString(R.string.insert_new_password));
+        } else {
+            if (!ValidateHelper.validateSinglePassword(this.passwordText, this) ||
+                    !ValidateHelper.validateSinglePassword(this.rePasswordText, this)) {
+                this.onUpdateFailed(RequestResponseHelper.RESPONSE_CODE_FAIL);
+                return;
+            }
+            this.processChangeUserPassword();
+        }
+    }
+
+    private void processChangeUserPassword() throws JSONException, UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException {
+        User user = new User();
+        user.setUserId(this.user.getUserId());
+        user.setLogin(this.user.getLogin());
+        user.setPassword(this.user.getPassword());
+        user.setCity(this.rePasswordText.getText().toString());
+        JSONObject jsonBody = new JSONObject(new Gson().toJson(user));
+        final String requestBody = jsonBody.toString();
+
+        final StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlHelper.getChangePasswordUrl(),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response.equals(RequestResponseHelper.RESPONSE_CODE_SUCCESS)) {
+                            onChangePasswordSuccess();
+                        } else {
+                            onChangePasswordFailed(response);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getBaseContext(), getResources().getString(R.string.loginRequestError),
+                        Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                return requestBody == null ? null : requestBody.getBytes();
+            }
+        };
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+    }
+
+    private void onChangePasswordSuccess() {
+        Toast.makeText(getBaseContext(), getResources().getString(R.string.changePassword_success),
+                Toast.LENGTH_SHORT).show();
+        this.restartActivity();
+
+    }
+
+    private void onChangePasswordFailed(String responseCode) {
+        String errorToast = this.getResources().getString(R.string.change_password_failed);
+        if (responseCode.equals(RequestResponseHelper.RESPONSE_CODE_ERROR_INCORRECT_OLD_PASSWORD)) {
+            getResources().getString(R.string.status_code_change_incorrect_old_password);
+        }
+        Toast.makeText(getBaseContext(), errorToast, Toast.LENGTH_SHORT).show();
     }
 
     private void changeBasicUserData() throws JSONException, UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException {
         Log.d(TAG, "Changing credentials processed");
-        this.onlyPreview = !this.onlyPreview;
-        if(!onlyPreview) {
+        if (onlyPreview) {
+            this.onlyPreview = !this.onlyPreview;
             this.setPasswordInputsEnableAndVisible(!this.onlyPreview, View.VISIBLE);
             this.setButtonsEnable(!onlyPreview, onlyPreview, onlyPreview);
             this.setBasicTextInputsEnable(!onlyPreview);
@@ -155,9 +281,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 this.onUpdateFailed(RequestResponseHelper.RESPONSE_CODE_FAIL);
                 return;
             }
-            this.progressDialog.show();
             this.processUpdateUserData();
-            this.progressDialog.hide();
         }
     }
 
@@ -212,42 +336,16 @@ public class UserProfileActivity extends AppCompatActivity {
     private void onUpdateSucess() {
         Toast.makeText(getBaseContext(), getResources().getString(R.string.update_success),
                 Toast.LENGTH_SHORT).show();
+        this.restartActivity();
+    }
+
+    private void restartActivity() {
         setResult(RESULT_OK, null);
         Intent intent = new Intent(this, UserProfileActivity.class);
         intent.putExtras(extras);
         intent.putExtra(RequestResponseHelper.USER_BUNDLE, new Gson().toJson(this.user));
         startActivity(intent);
         finish();
-    }
-
-    private void setButtonsEnable(Button pressedButton) {
-        if (this.onlyPreview) {
-            this.setButtonsEnable(true, true, true);
-            this.restoreTextOfButtons();
-            this.hintTextView.setText(this.getResources().getString(R.string.text_hint_default));
-        } else {
-            if (pressedButton == this.changeCredentialsButton) {
-                this.setButtonsEnable(true, false, false);
-                this.hintTextView.setText(this.getResources().getString(R.string.text_hint_change_credentials_insert_password));
-                this.changeCredentialsButton.setText(this.getResources().getString(R.string.save));
-            } else {
-                if (pressedButton == this.changePasswordButton) {
-                    this.setButtonsEnable(false, true, false);
-                    this.hintTextView.setText(this.getResources().getString(R.string.text_hint_change_password));
-                    this.changePasswordButton.setText(this.getResources().getString(R.string.save));
-                } else {
-                    this.setButtonsEnable(false, false, true);
-                    this.hintTextView.setText(this.getResources().getString(R.string.text_hint_delete_acccount));
-                    this.deleteAccountButton.setText(this.getResources().getString(R.string.save));
-                }
-            }
-        }
-    }
-
-    private void restoreTextOfButtons() {
-        this.changeCredentialsButton.setText(this.getResources().getString(R.string.changeCredentials));
-        this.changePasswordButton.setText(this.getResources().getString(R.string.changePassword));
-        this.deleteAccountButton.setText(this.getResources().getString(R.string.deleteAccount));
     }
 
     private void setButtonsEnable(boolean b1, boolean b2, boolean b3) {

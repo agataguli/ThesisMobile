@@ -2,7 +2,6 @@ package com.thesis.visageapp.helpers;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.EditText;
 
 import com.thesis.visageapp.R;
@@ -57,25 +56,29 @@ public class ValidateHelper {
         return !s.isEmpty();
     }
 
-    public static boolean validateUpdateData(EditText passwordText, EditText rePasswordText, EditText nameText,
-                              EditText surnameText, EditText emailText, EditText phoneNumberText,
-                              EditText countryText, EditText postCodeText, EditText cityText,
-                              EditText streetText, EditText addressDetailsText, Context context) {
-        boolean isValidate = true;
+    public static boolean validateSinglePassword(EditText passwordText, Context context) {
         if (!ValidateHelper.isValidPassword(passwordText.getText().toString())) {
-            String p = passwordText.getText().toString();
-            Log.d("ad",p);
             passwordText.setError(context.getString(R.string.passwordError));
-            isValidate = false;
+            return false;
         }
+        return true;
+    }
+
+    public static boolean validatePasswords(EditText passwordText, EditText rePasswordText, Context context) {
+        boolean isValid = true;
         if (!ValidateHelper.isValidRePassword(rePasswordText.getText().toString(),
                 passwordText.getText().toString())) {
-            String p = passwordText.getText().toString();
-            Log.d("ad",p);
-
             rePasswordText.setError(context.getString(R.string.rePasswordError));
-            isValidate = false;
+            isValid = false;
         }
+        return isValid && validateSinglePassword(passwordText, context);
+    }
+
+    public static boolean validateUpdateData(EditText passwordText, EditText rePasswordText, EditText nameText,
+                                             EditText surnameText, EditText emailText, EditText phoneNumberText,
+                                             EditText countryText, EditText postCodeText, EditText cityText,
+                                             EditText streetText, EditText addressDetailsText, Context context) {
+        boolean isValidate = true;
         if (!ValidateHelper.isValidNameSurname(nameText.getText().toString())) {
             nameText.setError(context.getString(R.string.nameError));
             isValidate = false;
@@ -112,7 +115,7 @@ public class ValidateHelper {
             addressDetailsText.setError(context.getString(R.string.addressDetailsError));
             isValidate = false;
         }
-        return isValidate;
+        return isValidate && validatePasswords(passwordText, rePasswordText, context);
     }
 
     public static boolean validateUserData(EditText peselText, EditText loginText, EditText passwordText,
@@ -129,8 +132,7 @@ public class ValidateHelper {
             loginText.setError(context.getString(R.string.loginError));
             isValidate = false;
         }
-        isValidate = isValidate && validateUpdateData(passwordText,rePasswordText,nameText,surnameText,
-                emailText,phoneNumberText,countryText,postCodeText,cityText,streetText,addressDetailsText,context);
-        return isValidate;
+        return isValidate && validateUpdateData(passwordText, rePasswordText, nameText, surnameText,
+                emailText, phoneNumberText, countryText, postCodeText, cityText, streetText, addressDetailsText, context);
     }
 }

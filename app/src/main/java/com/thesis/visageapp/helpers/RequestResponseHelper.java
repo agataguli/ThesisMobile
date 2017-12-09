@@ -19,10 +19,12 @@ public class RequestResponseHelper {
 
     public static final String RESPONSE_CODE_ERROR_SIGNUP_LOGIN_DUPLICATE = "300";
     public static final String RESPONSE_CODE_ERROR_SIGNUP_PESEL_DUPLICATE = "301";
-    public static final String RESPONSE_CODE_ERROR_SIGNUP_EMAIL_DUPLICATE = "301";
+    public static final String RESPONSE_CODE_ERROR_SIGNUP_EMAIL_DUPLICATE = "302";
 
     public static final String RESPONSE_CODE_ERROR_UPDATE_INCORRECT_PASSWORD = "400";
     public static final String RESPONSE_CODE_ERROR_UPDATE_EMAIL_DUPLICATE = "401";
+
+    public static final String RESPONSE_CODE_ERROR_INCORRECT_OLD_PASSWORD = "501";
 
     private static final String keyString = "inzyniery2017";
     private static final String encMeth = "HmacSHA1";

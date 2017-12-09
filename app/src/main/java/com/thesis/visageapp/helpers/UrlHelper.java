@@ -9,6 +9,8 @@ public class UrlHelper {
     private static final String URL_LOGIN = "/loginM";
     private static final String URL_SIGNUP = "/signupM";
     private static final String URL_UPDATE = "/updateM";
+    private static final String URL_PASS_CHANGE = "/changepassM";
+    private static final String URL_DELETE = "/deleteM";
 
     public static String getLoginUrl() {
         return ROOT_URL + URL_USERS + URL_LOGIN;
@@ -20,5 +22,13 @@ public class UrlHelper {
 
     public static String getUpdateUrl() {
         return ROOT_URL + URL_USERS + URL_UPDATE;
+    }
+
+    public static String getChangePasswordUrl() {
+        return ROOT_URL + URL_USERS + URL_PASS_CHANGE;
+    }
+
+    public static String getRemoveUrl() {
+        return ROOT_URL + URL_USERS + URL_DELETE;
     }
 }

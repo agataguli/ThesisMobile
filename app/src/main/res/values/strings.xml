@@ -64,4 +64,15 @@
     <string name="update_client_data_failed">Niepowodzenie - sprawdź poprawność danych oraz połączenie sieciowe.</string>
     <string name="status_code_update_incorrect_password">Niepowodzenie - wprowadzone hasło jest niepoprawne.</string>
     <string name="update_success">Pomyślnie zaktualizowano dane.</string>
+    <string name="newPassword">newValue</string>
+    <string name="newValue">newValue</string>
+    <string name="change_password_failed">Niepowodzenie zmiany hasła - wprawdź dane i połączenie sieciowe.</string>
+    <string name="status_code_change_incorrect_old_password">Wprowadzone pierwotne hasło jest nieprawidłowe!</string>
+    <string name="insert_new_password">Nowe hasło</string>
+    <string name="text_hint_default_tip">Ponowne wciśnięcie przycisku spowoduje wykonanie akcji. Wciśnij wstecz by zarzucić zmiany i wrócić do menu.</string>
+    <string name="changePassword_success">Pomyślnie zmieniono hasło.</string>
+    <string name="deleteAccount_success">Pomyślnie usunięto konto użytkownika.</string>
+    <string name="delete_account_failed">Niepowodzenie usuwania konta. Sprawdź dane osobowe oraz połączenie sieciowe.</string>
+    <string name="repeatPasswordOrInserNew">Nowe hasło/Powtórz hasło</string>
+    <string name="back">Wróć</string>
 </resources>
