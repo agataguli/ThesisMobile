@@ -42,6 +42,15 @@ public class MenuActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        this.logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newIntent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(newIntent);
+                finish();
+            }
+        });
     }
 
     @Override

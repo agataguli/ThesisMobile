@@ -1,5 +1,6 @@
 package com.thesis.visageapp.activities;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -20,6 +21,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private User user = new User();
     private Bundle extras = new Bundle();
     private boolean onlyPreview = true;
+    private final ProgressDialog progressDialog = new ProgressDialog(UserProfileActivity.this, R.style.AppTheme_Dark_Dialog);
 
     @Bind(R.id.textview_login_u)
     TextView loginTextView;
@@ -66,6 +68,9 @@ public class UserProfileActivity extends AppCompatActivity {
                     RequestResponseHelper.USER_BUNDLE));
             this.prepareFormFromUser();
         }
+        this.progressDialog.setIndeterminate(true);
+        this.progressDialog.setMessage(this.getResources().getString(R.string.authorizing));
+
 
         this.changeCredentialsButton.setOnClickListener(new View.OnClickListener() {
 

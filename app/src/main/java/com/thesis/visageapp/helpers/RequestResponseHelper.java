@@ -21,6 +21,8 @@ public class RequestResponseHelper {
     public static String RESPONSE_CODE_ERROR_SIGNUP_PESEL_DUPLICATE = "301";
     public static String RESPONSE_CODE_ERROR_SIGNUP_EMAIL_DUPLICATE = "301";
 
+    public static String RESPONSE_CODE_ERROR_UPDATE_EMAIL_DUPLICATE = "400";
+
     private static String keyString = "inzyniery2017";
     private static String encMeth = "HmacSHA1";
     private static String charEnc = "UTF-8";
