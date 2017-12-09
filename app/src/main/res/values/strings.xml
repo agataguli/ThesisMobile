@@ -53,4 +53,11 @@
     <string name="changeCredentials">Zmień dane</string>
     <string name="changePassword">Zmień hasło</string>
     <string name="deleteAccount">Usuń konto</string>
+    <string name="login_login">Zaloguj się</string>
+    <string name="text_link_link_dont_have_account">Nie masz konta? Zarejestruj się</string>
+    <string name="save">Zapisz</string>
+    <string name="text_hint_default">Wciśnij wstecz by wrócić do menu</string>
+    <string name="text_hint_change_credentials_insert_password">Wprowadź bieżące hasło i zapisz by zatwierdzić zmianę danych osobowych.</string>
+    <string name="text_hint_change_password">Wprowadź dwukrotnie nowe hasło i kliknij zapisz by zatwierdzić.</string>
+    <string name="text_hint_delete_acccount">Kliknij zapisz by na stałe usunąć konto z portalu.</string>
 </resources>
