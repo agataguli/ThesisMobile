@@ -2,6 +2,7 @@ package com.thesis.visageapp.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import butterknife.ButterKnife;
 
 public class UserProfileActivity extends AppCompatActivity {
     private User user = new User();
+    Bundle extras = new Bundle();
 
     @Bind(R.id.textview_login_u)
     TextView loginTextView;
@@ -39,6 +41,12 @@ public class UserProfileActivity extends AppCompatActivity {
     EditText streetText;
     @Bind(R.id.input_addressDetails_u)
     EditText addressDetailsText;
+    @Bind(R.id.button_user_change_credentials_u)
+    Button changeCredentialsButton;
+    @Bind(R.id.button_user_change_password_u)
+    Button changePasswordButton;
+    @Bind(R.id.button_user_delete_account_u)
+    Button deleteAccountButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +54,10 @@ public class UserProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_profile);
         ButterKnife.bind(this);
 
-        if(savedInstanceState != null) {
-            user = RequestResponseHelper.processUserStringJSON(savedInstanceState.getString
-                    (RequestResponseHelper.USER_BUNDLE));
+        this.extras = getIntent().getExtras();
+        if(this.extras != null) {
+            this.user = RequestResponseHelper.processUserStringJSON(extras.getString(
+                    RequestResponseHelper.USER_BUNDLE));
             this.prepareFormFromUser();
         }
     }

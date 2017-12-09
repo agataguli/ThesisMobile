@@ -1,6 +1,10 @@
 package com.thesis.visageapp.helpers;
 
+import android.content.Context;
 import android.text.TextUtils;
+import android.widget.EditText;
+
+import com.thesis.visageapp.R;
 
 public class ValidateHelper {
     public static boolean isValidLogin(String s) {
@@ -50,5 +54,67 @@ public class ValidateHelper {
 
     public static boolean isValidAddressDetails(String s) {
         return !s.isEmpty();
+    }
+
+    public static boolean validateUserData(EditText peselText, EditText loginText, EditText passwordText,
+                                           EditText rePasswordText, EditText nameText, EditText surnameText,
+                                           EditText emailText, EditText phoneNumberText, EditText countryText,
+                                           EditText postCodeText, EditText cityText, EditText streetText,
+                                           EditText addressDetailsText, Context context) {
+        boolean isValidate = true;
+        if (!ValidateHelper.isValidatePesel(peselText.getText().toString())) {
+            peselText.setError(context.getString(R.string.peselError));
+            isValidate = false;
+        }
+        if (!ValidateHelper.isValidLogin(loginText.getText().toString())) {
+            loginText.setError(context.getString(R.string.loginError));
+            isValidate = false;
+        }
+        if (!ValidateHelper.isValidPassword(passwordText.getText().toString())) {
+            passwordText.setError(context.getString(R.string.passwordError));
+            isValidate = false;
+        }
+        if (!ValidateHelper.isValidRePassword(rePasswordText.getText().toString(),
+                passwordText.getText().toString())) {
+            rePasswordText.setError(context.getString(R.string.rePasswordError));
+            isValidate = false;
+        }
+        if (!ValidateHelper.isValidNameSurname(nameText.getText().toString())) {
+            nameText.setError(context.getString(R.string.nameError));
+            isValidate = false;
+        }
+        if (!ValidateHelper.isValidNameSurname(surnameText.getText().toString())) {
+            surnameText.setError(context.getString(R.string.nameError));
+            isValidate = false;
+        }
+        if (!ValidateHelper.isValidEmail(emailText.getText().toString())) {
+            emailText.setError(context.getString(R.string.emailError));
+            isValidate = false;
+        }
+        if (!ValidateHelper.isValidPhoneNumber(phoneNumberText.getText().toString())) {
+            phoneNumberText.setError(context.getString(R.string.phoneError));
+            isValidate = false;
+        }
+        if (!ValidateHelper.isValidCountry(countryText.getText().toString())) {
+            countryText.setError(context.getString(R.string.countryError));
+            isValidate = false;
+        }
+        if (!ValidateHelper.isValidPostCode(postCodeText.getText().toString())) {
+            postCodeText.setError(context.getString(R.string.postCodeError));
+            isValidate = false;
+        }
+        if (!ValidateHelper.isValidCity(cityText.getText().toString())) {
+            cityText.setError(context.getString(R.string.cityError));
+            isValidate = false;
+        }
+        if (!ValidateHelper.isValidStreet(streetText.getText().toString())) {
+            streetText.setError(context.getString(R.string.streetError));
+            isValidate = false;
+        }
+        if (!ValidateHelper.isValidAddressDetails(addressDetailsText.getText().toString())) {
+            addressDetailsText.setError(context.getString(R.string.addressDetailsError));
+            isValidate = false;
+        }
+        return isValidate;
     }
 }

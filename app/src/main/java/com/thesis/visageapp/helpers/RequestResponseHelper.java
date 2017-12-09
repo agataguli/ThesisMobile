@@ -25,6 +25,7 @@ public class RequestResponseHelper {
     private static String encMeth = "HmacSHA1";
     private static String charEnc = "UTF-8";
     public static String USER_BUNDLE = "userbundle";
+    public static String USER_ID = "userid";
 
     public static User processUserStringJSON(String JSON) {
         Gson gson = new GsonBuilder().create();

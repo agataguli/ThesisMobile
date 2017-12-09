@@ -46,12 +46,16 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="4dp">
-            <EditText android:id="@+id/input_name_u"
+
+            <EditText
+                android:id="@+id/input_name_u"
                 android:layout_width="match_parent"
-                android:enabled="false"
                 android:layout_height="wrap_content"
+                android:enabled="false"
+                android:hint="@string/name"
                 android:inputType="textPersonName"
-                android:hint="@string/name" />
+                android:textAlignment="center"
+                android:textColor="@color/primary_darkest_white_skin" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -62,6 +66,7 @@
             <EditText android:id="@+id/input_surname_u"
                 android:layout_width="match_parent"
                 android:enabled="false"
+                android:textColor="@color/primary_darkest_white_skin"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:hint="@string/surname" />
@@ -75,6 +80,7 @@
             <EditText android:id="@+id/input_email_u"
                 android:layout_width="match_parent"
                 android:enabled="false"
+                android:textColor="@color/primary_darkest_white_skin"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
                 android:hint="@string/email" />
@@ -88,6 +94,7 @@
             <EditText android:id="@+id/input_phoneNumber_u"
                 android:layout_width="match_parent"
                 android:enabled="false"
+                android:textColor="@color/primary_darkest_white_skin"
                 android:layout_height="wrap_content"
                 android:inputType="phone"
                 android:hint="@string/phoneNumber" />
@@ -101,6 +108,7 @@
             <EditText android:id="@+id/input_country_u"
                 android:layout_width="match_parent"
                 android:enabled="false"
+                android:textColor="@color/primary_darkest_white_skin"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:hint="@string/country" />
@@ -114,6 +122,7 @@
             <EditText android:id="@+id/input_postCode_u"
                 android:layout_width="match_parent"
                 android:enabled="false"
+                android:textColor="@color/primary_darkest_white_skin"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:hint="@string/postCode" />
@@ -127,6 +136,7 @@
             <EditText android:id="@+id/input_city_u"
                 android:layout_width="match_parent"
                 android:enabled="false"
+                android:textColor="@color/primary_darkest_white_skin"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:hint="@string/city" />
@@ -140,6 +150,7 @@
             <EditText android:id="@+id/input_street_u"
                 android:layout_width="match_parent"
                 android:enabled="false"
+                android:textColor="@color/primary_darkest_white_skin"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:hint="@string/street" />
@@ -153,6 +164,7 @@
             <EditText android:id="@+id/input_addressDetails_u"
                 android:layout_width="match_parent"
                 android:enabled="false"
+                android:textColor="@color/primary_darkest_white_skin"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:hint="@string/addressDetails" />
@@ -167,6 +179,7 @@
                 android:layout_width="match_parent"
                 android:visibility="gone"
                 android:enabled="true"
+                android:textColor="@color/primary_darkest_white_skin"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:hint="@string/password" />
@@ -181,10 +194,38 @@
                 android:layout_width="match_parent"
                 android:visibility="gone"
                 android:enabled="true"
+                android:textColor="@color/primary_darkest_white_skin"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:hint="@string/repeatPassword" />
         </android.support.design.widget.TextInputLayout>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/button_user_change_credentials_u"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:padding="12dp"
+            android:text="@string/changeCredentials"/>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/button_user_change_password_u"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:padding="12dp"
+            android:text="@string/changePassword"/>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/button_user_delete_account_u"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:padding="12dp"
+            android:text="@string/deleteAccount"/>
 
     </LinearLayout>
 </ScrollView>

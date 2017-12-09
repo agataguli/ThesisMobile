@@ -50,4 +50,7 @@
     <string name="name">Imię</string>
     <string name="login">Login</string>
     <string name="pesel">Pesel</string>
+    <string name="changeCredentials">Zmień dane</string>
+    <string name="changePassword">Zmień hasło</string>
+    <string name="deleteAccount">Usuń konto</string>
 </resources>

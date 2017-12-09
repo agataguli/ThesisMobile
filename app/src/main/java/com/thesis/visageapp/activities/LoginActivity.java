@@ -115,6 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d(TAG, error.toString());
                 Toast.makeText(getBaseContext(), getResources().getString(R.string.loginRequestError),
                         Toast.LENGTH_SHORT).show();
+                loginButton.setEnabled(true);
             }
         }) {
             @Override
@@ -148,6 +149,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setEnabled(true);
         Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
         intent.putExtra(RequestResponseHelper.USER_BUNDLE, new Gson().toJson(this.user));
+        intent.putExtra(RequestResponseHelper.USER_ID, this.user.getUserId());
         startActivityForResult(intent, REQUEST_SIGNUP);
         finish();
     }

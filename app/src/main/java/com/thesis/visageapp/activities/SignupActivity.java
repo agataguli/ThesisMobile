@@ -99,8 +99,8 @@ public class SignupActivity extends AppCompatActivity {
 
     public void signup() throws JSONException, UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException {
         Log.d(TAG, "Login processed");
-
-        if (!validateRegisterData()) {
+        if (!ValidateHelper.validateUserData(peselText, loginText, passwordText, rePasswordText, nameText, surnameText,
+                emailText, phoneNumberText, countryText, postCodeText, cityText, streetText, addressDetailsText, this)) {
             onSignupFailed(RequestResponseHelper.RESPONSE_CODE_FAIL);
             return;
         }
@@ -192,63 +192,5 @@ public class SignupActivity extends AppCompatActivity {
         }
         Toast.makeText(getBaseContext(), errorToast, Toast.LENGTH_SHORT).show();
         signUpButton.setEnabled(true);
-    }
-
-    public boolean validateRegisterData() {
-        boolean isValidate = true;
-        if (!ValidateHelper.isValidatePesel(this.peselText.getText().toString())) {
-            this.peselText.setError(this.getResources().getString(R.string.peselError));
-            isValidate = false;
-        }
-        if (!ValidateHelper.isValidLogin(this.loginText.getText().toString())) {
-            this.loginText.setError(this.getResources().getString(R.string.loginError));
-            isValidate = false;
-        }
-        if (!ValidateHelper.isValidPassword(this.passwordText.getText().toString())) {
-            this.passwordText.setError(this.getResources().getString(R.string.passwordError));
-            isValidate = false;
-        }
-        if (!ValidateHelper.isValidRePassword(this.rePasswordText.getText().toString(),
-                this.passwordText.getText().toString())) {
-            this.rePasswordText.setError(this.getResources().getString(R.string.rePasswordError));
-            isValidate = false;
-        }
-        if (!ValidateHelper.isValidNameSurname(this.nameText.getText().toString())) {
-            this.nameText.setError(this.getResources().getString(R.string.nameError));
-            isValidate = false;
-        }
-        if (!ValidateHelper.isValidNameSurname(this.surnameText.getText().toString())) {
-            this.surnameText.setError(this.getResources().getString(R.string.nameError));
-            isValidate = false;
-        }
-        if (!ValidateHelper.isValidEmail(this.emailText.getText().toString())) {
-            this.emailText.setError(this.getResources().getString(R.string.emailError));
-            isValidate = false;
-        }
-        if (!ValidateHelper.isValidPhoneNumber(this.phoneNumberText.getText().toString())) {
-            this.phoneNumberText.setError(this.getResources().getString(R.string.phoneError));
-            isValidate = false;
-        }
-        if (!ValidateHelper.isValidCountry(this.countryText.getText().toString())) {
-            this.countryText.setError(this.getResources().getString(R.string.countryError));
-            isValidate = false;
-        }
-        if (!ValidateHelper.isValidPostCode(this.postCodeText.getText().toString())) {
-            this.postCodeText.setError(this.getResources().getString(R.string.postCodeError));
-            isValidate = false;
-        }
-        if (!ValidateHelper.isValidCity(this.cityText.getText().toString())) {
-            this.cityText.setError(this.getResources().getString(R.string.cityError));
-            isValidate = false;
-        }
-        if (!ValidateHelper.isValidStreet(this.streetText.getText().toString())) {
-            this.streetText.setError(this.getResources().getString(R.string.streetError));
-            isValidate = false;
-        }
-        if (!ValidateHelper.isValidAddressDetails(this.addressDetailsText.getText().toString())) {
-            this.addressDetailsText.setError(this.getResources().getString(R.string.addressDetailsError));
-            isValidate = false;
-        }
-        return isValidate;
     }
 }
