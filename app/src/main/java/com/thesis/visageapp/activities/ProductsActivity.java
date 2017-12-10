@@ -4,12 +4,15 @@ import android.content.ClipData;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.thesis.visageapp.R;
 import com.thesis.visageapp.objects.Product;
 import com.thesis.visageapp.objects.ProductListFragment;
+
+import static android.R.attr.fragment;
 
 public class ProductsActivity extends AppCompatActivity implements ProductListFragment.ProductListControllerCallback<Product>{
 
@@ -20,8 +23,9 @@ public class ProductsActivity extends AppCompatActivity implements ProductListFr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_products);
 
-
+        FragmentManager fragmentManager = getSupportFragmentManager();
         productListFragment = new ProductListFragment();
+
 
     }
 

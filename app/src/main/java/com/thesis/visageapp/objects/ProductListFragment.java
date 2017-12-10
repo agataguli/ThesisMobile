@@ -6,7 +6,9 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.android.volley.Request;
@@ -26,9 +28,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by wmysiak on 2017-12-10.
- */
 
 public class ProductListFragment extends ListFragment {
     private ProductListControllerCallback callback;
@@ -37,6 +36,13 @@ public class ProductListFragment extends ListFragment {
 
     public interface ProductListControllerCallback<T> {
         void onItemClicked(T item);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_list_layout, container, false);
+        return view;
     }
 
     @Override
