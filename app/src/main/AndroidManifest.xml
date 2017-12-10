@@ -15,6 +15,7 @@
             android:theme="@style/AppTheme.Dark">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -29,7 +30,13 @@
             android:theme="@style/AppTheme.White" />
         <activity
             android:name=".activities.UserProfileActivity"
-            android:theme="@style/AppTheme.White"/>
+            android:theme="@style/AppTheme.White" />
+        <activity
+            android:name=".activities.ProductListActivity"
+            android:theme="@style/AppTheme.White" />
+        <activity
+            android:name=".activities.ProductDetailsActivity"
+            android:theme="@style/AppTheme.White" />
     </application>
 
 </manifest>

@@ -20,7 +20,7 @@ import com.thesis.visageapp.R;
 import com.thesis.visageapp.helpers.RequestResponseHelper;
 import com.thesis.visageapp.helpers.UrlHelper;
 import com.thesis.visageapp.helpers.ValidateHelper;
-import com.thesis.visageapp.helpers.VolleySingleton;
+import com.thesis.visageapp.processors.VolleySingleton;
 import com.thesis.visageapp.objects.User;
 
 import org.json.JSONException;
@@ -123,9 +123,17 @@ public class UserProfileActivity extends AppCompatActivity {
         this.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                restartActivity();
+                backToMenuActivity();
             }
         });
+    }
+
+    private void backToMenuActivity() {
+        Intent intent = new Intent(this, MenuActivity.class);
+        intent.putExtras(extras);
+        intent.putExtra(RequestResponseHelper.USER_BUNDLE, new Gson().toJson(this.user));
+        startActivity(intent);
+        finish();
     }
 
     private void deleteUserAccount() throws InvalidKeyException, NoSuchAlgorithmException, JSONException, UnsupportedEncodingException {

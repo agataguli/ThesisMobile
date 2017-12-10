@@ -5,7 +5,11 @@ public class UrlHelper {
     //public static final String ROOT_URL = "http://10.0.2.2:8080/visageapp";
 
     private static final String URL_SLASH ="/";
+    private static final String URL_ALL = "/allM";
+
     private static final String URL_USERS = "/users";
+    private static final String URL_PRODUCTS = "/products";
+
     private static final String URL_LOGIN = "/loginM";
     private static final String URL_SIGNUP = "/signupM";
     private static final String URL_UPDATE = "/updateM";
@@ -30,5 +34,9 @@ public class UrlHelper {
 
     public static String getRemoveUrl() {
         return ROOT_URL + URL_USERS + URL_DELETE;
+    }
+
+    public static String getGetAllProductUrl() {
+        return ROOT_URL + URL_PRODUCTS + URL_ALL;
     }
 }

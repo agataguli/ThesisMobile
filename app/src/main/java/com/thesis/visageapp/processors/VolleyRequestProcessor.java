@@ -1,4 +1,4 @@
-package com.thesis.visageapp.objects;
+package com.thesis.visageapp.processors;
 
 import android.content.Context;
 import android.widget.Toast;
@@ -12,7 +12,7 @@ import com.google.gson.Gson;
 import com.thesis.visageapp.R;
 import com.thesis.visageapp.helpers.RequestResponseHelper;
 import com.thesis.visageapp.helpers.UrlHelper;
-import com.thesis.visageapp.helpers.VolleySingleton;
+import com.thesis.visageapp.objects.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;

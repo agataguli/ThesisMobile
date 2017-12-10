@@ -2,13 +2,17 @@ package com.thesis.visageapp.helpers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.thesis.visageapp.objects.Product;
 import com.thesis.visageapp.objects.User;
 
 import org.apache.commons.codec.binary.Base64;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -29,12 +33,27 @@ public class RequestResponseHelper {
     private static final String keyString = "inzyniery2017";
     private static final String encMeth = "HmacSHA1";
     private static final String charEnc = "UTF-8";
+
     public static final String USER_BUNDLE = "userbundle";
     public static final String USER_ID = "userid";
+    public static final String PRODUCT_ID = "productid";
+
+    public static final String LIST_FILTER_ALL = "all";
+    public static final String LIST_FILTER_PRODUCT_FILTER = "productFilter";
+
+    public static final String CATEGORY_BRUSHES = "PĘDZLE";
+    public static final String CATEGORY_FURNITURE = "WYPOSAŻENIE";
+    public static final String CATEGORY_ACCESORIES = "AKCESORIA";
 
     public static User processUserStringJSON(String JSON) {
         Gson gson = new GsonBuilder().create();
         return gson.fromJson(JSON, User.class);
+    }
+
+    public static List<Product> proceessProductsStringJson(String JSON) {
+        Type listType = new TypeToken<List<Product>>() {}.getType();
+        List<Product> products = new Gson().fromJson(JSON, listType);
+        return products;
     }
 
     public static String hashMessage(String message) throws UnsupportedEncodingException, NoSuchAlgorithmException,
