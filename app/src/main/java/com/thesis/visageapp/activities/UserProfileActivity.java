@@ -17,7 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.thesis.visageapp.R;
-import com.thesis.visageapp.helpers.RequestResponseHelper;
+import com.thesis.visageapp.helpers.RequestResponseStaticPartsHelper;
 import com.thesis.visageapp.helpers.UrlHelper;
 import com.thesis.visageapp.helpers.ValidateHelper;
 import com.thesis.visageapp.processors.VolleySingleton;
@@ -82,8 +82,8 @@ public class UserProfileActivity extends AppCompatActivity {
 
         this.extras = getIntent().getExtras();
         if (this.extras != null) {
-            this.user = RequestResponseHelper.processUserStringJSON(extras.getString(
-                    RequestResponseHelper.USER_BUNDLE));
+            this.user = RequestResponseStaticPartsHelper.processUserStringJSON(extras.getString(
+                    RequestResponseStaticPartsHelper.USER_BUNDLE));
             this.prepareFormFromUser();
         }
 
@@ -131,7 +131,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private void backToMenuActivity() {
         Intent intent = new Intent(this, MenuActivity.class);
         intent.putExtras(extras);
-        intent.putExtra(RequestResponseHelper.USER_BUNDLE, new Gson().toJson(this.user));
+        intent.putExtra(RequestResponseStaticPartsHelper.USER_BUNDLE, new Gson().toJson(this.user));
         startActivity(intent);
         finish();
     }
@@ -145,7 +145,7 @@ public class UserProfileActivity extends AppCompatActivity {
         } else {
             if (!ValidateHelper.validateUpdateData(passwordText, rePasswordText, nameText, surnameText, emailText,
                     phoneNumberText, countryText, postCodeText, cityText, streetText, addressDetailsText, this)) {
-                this.onUpdateFailed(RequestResponseHelper.RESPONSE_CODE_FAIL);
+                this.onUpdateFailed(RequestResponseStaticPartsHelper.RESPONSE_CODE_FAIL);
                 return;
             }
             this.processRemoveUserAccount();
@@ -160,7 +160,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if (response.equals(RequestResponseHelper.RESPONSE_CODE_SUCCESS)) {
+                        if (response.equals(RequestResponseStaticPartsHelper.RESPONSE_CODE_SUCCESS)) {
                             onRemoveSuccess();
                         } else {
                             onRemoveFailed(response);
@@ -189,7 +189,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private void onRemoveFailed(String responseCode) {
         String errorToast = this.getResources().getString(R.string.delete_account_failed);
-        if (responseCode.equals(RequestResponseHelper.RESPONSE_CODE_ERROR_INCORRECT_OLD_PASSWORD)) {
+        if (responseCode.equals(RequestResponseStaticPartsHelper.RESPONSE_CODE_ERROR_INCORRECT_OLD_PASSWORD)) {
             getResources().getString(R.string.status_code_change_incorrect_old_password);
         }
         Toast.makeText(getBaseContext(), errorToast, Toast.LENGTH_SHORT).show();
@@ -215,7 +215,7 @@ public class UserProfileActivity extends AppCompatActivity {
         } else {
             if (!ValidateHelper.validateSinglePassword(this.passwordText, this) ||
                     !ValidateHelper.validateSinglePassword(this.rePasswordText, this)) {
-                this.onUpdateFailed(RequestResponseHelper.RESPONSE_CODE_FAIL);
+                this.onUpdateFailed(RequestResponseStaticPartsHelper.RESPONSE_CODE_FAIL);
                 return;
             }
             this.processChangeUserPassword();
@@ -235,7 +235,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if (response.equals(RequestResponseHelper.RESPONSE_CODE_SUCCESS)) {
+                        if (response.equals(RequestResponseStaticPartsHelper.RESPONSE_CODE_SUCCESS)) {
                             onChangePasswordSuccess();
                         } else {
                             onChangePasswordFailed(response);
@@ -270,7 +270,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private void onChangePasswordFailed(String responseCode) {
         String errorToast = this.getResources().getString(R.string.change_password_failed);
-        if (responseCode.equals(RequestResponseHelper.RESPONSE_CODE_ERROR_INCORRECT_OLD_PASSWORD)) {
+        if (responseCode.equals(RequestResponseStaticPartsHelper.RESPONSE_CODE_ERROR_INCORRECT_OLD_PASSWORD)) {
             getResources().getString(R.string.status_code_change_incorrect_old_password);
         }
         Toast.makeText(getBaseContext(), errorToast, Toast.LENGTH_SHORT).show();
@@ -286,7 +286,7 @@ public class UserProfileActivity extends AppCompatActivity {
         } else {
             if (!ValidateHelper.validateUpdateData(passwordText, rePasswordText, nameText, surnameText, emailText,
                     phoneNumberText, countryText, postCodeText, cityText, streetText, addressDetailsText, this)) {
-                this.onUpdateFailed(RequestResponseHelper.RESPONSE_CODE_FAIL);
+                this.onUpdateFailed(RequestResponseStaticPartsHelper.RESPONSE_CODE_FAIL);
                 return;
             }
             this.processUpdateUserData();
@@ -295,10 +295,10 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private void onUpdateFailed(String responseCode) {
         String errorToast = this.getResources().getString(R.string.update_client_data_failed);
-        if (responseCode.equals(RequestResponseHelper.RESPONSE_CODE_ERROR_UPDATE_EMAIL_DUPLICATE)) {
+        if (responseCode.equals(RequestResponseStaticPartsHelper.RESPONSE_CODE_ERROR_UPDATE_EMAIL_DUPLICATE)) {
             getResources().getString(R.string.status_code_update_email_duplicate);
         } else {
-            if (responseCode.equals(RequestResponseHelper.RESPONSE_CODE_ERROR_UPDATE_INCORRECT_PASSWORD)) {
+            if (responseCode.equals(RequestResponseStaticPartsHelper.RESPONSE_CODE_ERROR_UPDATE_INCORRECT_PASSWORD)) {
                 getResources().getString(R.string.status_code_update_incorrect_password);
             }
         }
@@ -314,7 +314,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if (response.equals(RequestResponseHelper.RESPONSE_CODE_SUCCESS)) {
+                        if (response.equals(RequestResponseStaticPartsHelper.RESPONSE_CODE_SUCCESS)) {
                             onUpdateSucess();
                         } else {
                             onUpdateFailed(response);
@@ -351,7 +351,7 @@ public class UserProfileActivity extends AppCompatActivity {
         setResult(RESULT_OK, null);
         Intent intent = new Intent(this, UserProfileActivity.class);
         intent.putExtras(extras);
-        intent.putExtra(RequestResponseHelper.USER_BUNDLE, new Gson().toJson(this.user));
+        intent.putExtra(RequestResponseStaticPartsHelper.USER_BUNDLE, new Gson().toJson(this.user));
         startActivity(intent);
         finish();
     }
@@ -401,7 +401,7 @@ public class UserProfileActivity extends AppCompatActivity {
         user.setUserId(this.user.getUserId());
         user.setName(nameText.getText().toString());
         user.setLogin(this.user.getLogin());
-        user.setPassword(RequestResponseHelper.hashMessage(this.passwordText.getText().toString()));
+        user.setPassword(RequestResponseStaticPartsHelper.hashMessage(this.passwordText.getText().toString()));
         user.setSurname(surnameText.getText().toString());
         user.setEmail(emailText.getText().toString());
         user.setPhoneNumber(phoneNumberText.getText().toString());

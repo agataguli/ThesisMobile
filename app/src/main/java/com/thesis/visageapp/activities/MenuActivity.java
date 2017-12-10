@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.thesis.visageapp.R;
-import com.thesis.visageapp.helpers.RequestResponseHelper;
+import com.thesis.visageapp.helpers.RequestResponseStaticPartsHelper;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -57,7 +57,7 @@ public class MenuActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent newIntent = new Intent(getApplicationContext(), ProductListActivity.class);
                 newIntent.putExtras(getIntent().getExtras());
-                newIntent.putExtra(RequestResponseHelper.LIST_FILTER_PRODUCT_FILTER, RequestResponseHelper.LIST_FILTER_ALL);
+                newIntent.putExtra(RequestResponseStaticPartsHelper.LIST_FILTER_PRODUCT_FILTER, RequestResponseStaticPartsHelper.LIST_FILTER_ALL);
                 startActivity(newIntent);
                 finish();
             }

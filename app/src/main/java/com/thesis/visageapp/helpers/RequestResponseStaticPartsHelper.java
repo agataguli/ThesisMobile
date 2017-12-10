@@ -17,7 +17,7 @@ import java.util.List;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-public class RequestResponseHelper {
+public class RequestResponseStaticPartsHelper {
     public static final String RESPONSE_CODE_SUCCESS = "200";
     public static final String RESPONSE_CODE_FAIL = "201";
 

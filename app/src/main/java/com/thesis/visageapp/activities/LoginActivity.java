@@ -18,7 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.thesis.visageapp.R;
-import com.thesis.visageapp.helpers.RequestResponseHelper;
+import com.thesis.visageapp.helpers.RequestResponseStaticPartsHelper;
 import com.thesis.visageapp.helpers.UrlHelper;
 import com.thesis.visageapp.helpers.ValidateHelper;
 import com.thesis.visageapp.processors.VolleySingleton;
@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage(this.getResources().getString(R.string.authorizing));
         progressDialog.show();
         user.setLogin(this.loginText.getText().toString());
-        user.setPassword(RequestResponseHelper.hashMessage(this.passwordText.getText().toString()));
+        user.setPassword(RequestResponseStaticPartsHelper.hashMessage(this.passwordText.getText().toString()));
         this.processLogin();
         progressDialog.hide();
     }
@@ -102,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
         final StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlHelper.getLoginUrl(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                user = RequestResponseHelper.processUserStringJSON(response);
+                user = RequestResponseStaticPartsHelper.processUserStringJSON(response);
                 if (user.getUserId().equals(getResources().getString(R.string.ERROR))) {
                     onLoginFailed();
                 } else {
@@ -148,8 +148,8 @@ public class LoginActivity extends AppCompatActivity {
     public void onLoginSuccess() {
         loginButton.setEnabled(true);
         Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
-        intent.putExtra(RequestResponseHelper.USER_BUNDLE, new Gson().toJson(this.user));
-        intent.putExtra(RequestResponseHelper.USER_ID, this.user.getUserId());
+        intent.putExtra(RequestResponseStaticPartsHelper.USER_BUNDLE, new Gson().toJson(this.user));
+        intent.putExtra(RequestResponseStaticPartsHelper.USER_ID, this.user.getUserId());
         startActivityForResult(intent, REQUEST_SIGNUP);
         finish();
     }

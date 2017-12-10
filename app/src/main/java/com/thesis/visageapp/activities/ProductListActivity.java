@@ -17,7 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.thesis.visageapp.R;
-import com.thesis.visageapp.helpers.RequestResponseHelper;
+import com.thesis.visageapp.helpers.RequestResponseStaticPartsHelper;
 import com.thesis.visageapp.helpers.UrlHelper;
 import com.thesis.visageapp.objects.Product;
 import com.thesis.visageapp.processors.VolleySingleton;
@@ -67,7 +67,7 @@ public class ProductListActivity extends ListActivity{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Intent intent = new Intent(getApplicationContext(), ProductDetailsActivity.class);
                 //intent.putExtras(extras);
-                //intent.putExtra(RequestResponseHelper.PRODUCT_ID, id);
+                //intent.putExtra(RequestResponseStaticPartsHelper.PRODUCT_ID, id);
                 //startActivity(intent);
                 Toast.makeText(getApplicationContext(),
                         "Click ListItem Number " + position, Toast.LENGTH_LONG)
@@ -95,7 +95,7 @@ public class ProductListActivity extends ListActivity{
     };
 
     private void processFilledList(String response) {
-        this.productListList = RequestResponseHelper.proceessProductsStringJson(response);
+        this.productListList = RequestResponseStaticPartsHelper.proceessProductsStringJson(response);
         // tutaj Ewelina masz juz w liście productListLIst całą produktów z bazy.
         // teraz weź to zmapuj na productListView.
     }

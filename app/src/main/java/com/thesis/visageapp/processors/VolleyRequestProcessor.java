@@ -10,7 +10,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.thesis.visageapp.R;
-import com.thesis.visageapp.helpers.RequestResponseHelper;
+import com.thesis.visageapp.helpers.RequestResponseStaticPartsHelper;
 import com.thesis.visageapp.helpers.UrlHelper;
 import com.thesis.visageapp.objects.User;
 
@@ -34,12 +34,12 @@ public class VolleyRequestProcessor {
                     @Override
                     public void onResponse(String response) {
                         if (URL == UrlHelper.getLoginUrl()) {
-                            User user = RequestResponseHelper.processUserStringJSON(response);
+                            User user = RequestResponseStaticPartsHelper.processUserStringJSON(response);
                             if (user.getUserId().equals(context.getString(R.string.ERROR))) {
                                 onUpdateFailed(context.getString(R.string.ERROR));
                             }
                         } else {
-                            if (response.equals(RequestResponseHelper.RESPONSE_CODE_SUCCESS)) {
+                            if (response.equals(RequestResponseStaticPartsHelper.RESPONSE_CODE_SUCCESS)) {
                                 onUpdateSuccess();
                             } else {
                                 onUpdateFailed(response);
@@ -72,6 +72,6 @@ public class VolleyRequestProcessor {
     }
 
     private void onUpdateSuccess() {
-        this.responseCode = RequestResponseHelper.RESPONSE_CODE_SUCCESS;
+        this.responseCode = RequestResponseStaticPartsHelper.RESPONSE_CODE_SUCCESS;
     }
 }
