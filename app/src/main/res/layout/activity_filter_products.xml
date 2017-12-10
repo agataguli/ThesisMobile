@@ -165,6 +165,16 @@
             android:text="@string/filter"/>
 
         <android.support.v7.widget.AppCompatButton
+            android:id="@+id/button_fav_f"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/primary_white_skin"
+            android:textColor="@color/primary_darker"
+            android:text="@string/show_fav"/>
+
+        <android.support.v7.widget.AppCompatButton
             android:id="@+id/button_back_f"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

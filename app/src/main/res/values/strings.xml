@@ -97,4 +97,7 @@
     <string name="productCatFilterError">Wybierz przynajmniej jedną kategorię produktów.</string>
     <string name="filterError">Niepowodzenie filtracji. Sprawdź połączenie sieciowe i poprawność wprawadzonych danych.</string>
     <string name="filterSuccess">Wyświetlone produkty odpowiadają wprowadzonemu kryterium. Aby stworzyć nowy filter ponownie klinij filtruj.</string>
+    <string name="cart">Koszyk</string>
+    <string name="favError">Nieoczekiwany błąd, sprawdź połączenie sieciowe.</string>
+    <string name="show_fav">Pokaż twoje ulubione produkty</string>
 </resources>

@@ -21,6 +21,7 @@ import com.thesis.visageapp.helpers.RequestResponseStaticPartsHelper;
 import com.thesis.visageapp.helpers.UrlHelper;
 import com.thesis.visageapp.helpers.ValidateHelper;
 import com.thesis.visageapp.objects.ProductFilter;
+import com.thesis.visageapp.objects.User;
 import com.thesis.visageapp.processors.VolleySingleton;
 
 import org.json.JSONException;
@@ -31,7 +32,8 @@ import butterknife.ButterKnife;
 
 public class FilterProductsActivity extends AppCompatActivity {
     private static final String TAG = "FilterProductsActivity";
-    private Bundle extras;
+    private Bundle extras = new Bundle();
+    private User user = new User();
     private ProductFilter productFilter;
 
     @Bind(R.id.input_filter_phrase_f)
@@ -52,6 +54,8 @@ public class FilterProductsActivity extends AppCompatActivity {
     Button backButton;
     @Bind(R.id.button_filter_f)
     Button filterButton;
+    @Bind(R.id.button_fav_f)
+    Button showFavoritesButton;
 
 
     @Override
@@ -61,6 +65,11 @@ public class FilterProductsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         this.extras = getIntent().getExtras();
+        if (this.extras != null) {
+            this.user = RequestResponseStaticPartsHelper.processUserStringJSON(extras.getString(
+                    RequestResponseStaticPartsHelper.USER_BUNDLE));
+        }
+
         this.productFilter = new ProductFilter();
         this.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +82,18 @@ public class FilterProductsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    filterProducts();
+                    filterProducts(true);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        this.showFavoritesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    filterProducts(false);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -81,15 +101,37 @@ public class FilterProductsActivity extends AppCompatActivity {
         });
     }
 
-    private void filterProducts() throws JSONException {
+    private void filterProducts(boolean commonPhraseFiltering) throws JSONException {
         Log.d(TAG, "Filtering processed");
         this.setEnableButtons(false);
-        if (!ValidateHelper.validateProductFilterData(productName, productBrand, productPriceMin,
-                productPriceMax, productCatBrushes, productCatFurniture, productCatAccessories, this)) {
-            this.onFilterFailed();
-            return;
+        if (commonPhraseFiltering) {
+            if (!ValidateHelper.validateProductFilterData(productName, productBrand, productPriceMin,
+                    productPriceMax, productCatBrushes, productCatFurniture, productCatAccessories, this)) {
+                this.onFilterFailed();
+                return;
+            }
+            this.processFilterData();
+        } else {
+            this.fillFavoriteProductList();
         }
-        this.processFilterData();
+    }
+
+    private void fillFavoriteProductList() {
+        final StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                UrlHelper.getUserFavProductsUrl(this.user.getUserId()),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        onFilterSuccess(response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getBaseContext(), getResources().getString(R.string.favError),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
 
     private void prepareFormProductFilter() {
@@ -117,14 +159,14 @@ public class FilterProductsActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        onFilterSucess(response);
+                        onFilterSuccess(response);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(TAG, error.toString());
                 Toast.makeText(getBaseContext(), getResources().getString(R.string.loginRequestError),
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_LONG).show();
             }
         }) {
             @Override
@@ -142,7 +184,7 @@ public class FilterProductsActivity extends AppCompatActivity {
 
     }
 
-    private void onFilterSucess(String response) {
+    private void onFilterSuccess(String response) {
         Toast.makeText(getBaseContext(), getResources().getString(R.string.filterSuccess),
                 Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, ProductListActivity.class);

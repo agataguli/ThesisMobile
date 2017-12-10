@@ -43,9 +43,9 @@ public class ProductListActivity extends AppCompatActivity {
         this.extras = getIntent().getExtras();
 
         if (extras.getString(RequestResponseStaticPartsHelper.LIST_FILTER_PRODUCT_FILTER).equals(RequestResponseStaticPartsHelper.LIST_FILTER_ALL)) {
-            this.fillProductList();
+            this.fillListWithAllAvailableProducts();
         } else {
-            this.processFilledList(extras.getString(RequestResponseStaticPartsHelper.LIST_FILTER_PRODUCT_FILTER));
+            this.processFillingListWithResponseProducts(extras.getString(RequestResponseStaticPartsHelper.LIST_FILTER_PRODUCT_FILTER));
         }
 
         this.backButton.setOnClickListener(new View.OnClickListener() {
@@ -72,12 +72,12 @@ public class ProductListActivity extends AppCompatActivity {
     }
 
 
-    private void fillProductList() {
+    private void fillListWithAllAvailableProducts() {
         final StringRequest stringRequest = new StringRequest(Request.Method.GET, UrlHelper.getGetAllProductUrl(),
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        processFilledList(response);
+                        processFillingListWithResponseProducts(response);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -92,7 +92,7 @@ public class ProductListActivity extends AppCompatActivity {
 
     ;
 
-    private void processFilledList(String response) {
+    private void processFillingListWithResponseProducts(String response) {
         this.productListList = RequestResponseStaticPartsHelper.proceessProductsStringJson(response);
         // tutaj Ewelina masz juz w liście productListLIst całą produktów z bazy.
         // teraz weź to zmapuj na productListView.

@@ -13,11 +13,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MenuActivity extends AppCompatActivity {
+    private Bundle extras = new Bundle();
 
     @Bind(R.id.button_products_m)
     Button productsButton;
-    @Bind(R.id.button_user_favorite_products_m)
-    Button favoritesButton;
     @Bind(R.id.button_user_cart_m)
     Button cartButton;
     @Bind(R.id.button_user_order_history_m)
@@ -33,11 +32,13 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
         ButterKnife.bind(this);
 
+        this.extras = getIntent().getExtras();
+
         this.userAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent newIntent = new Intent(getApplicationContext(), UserProfileActivity.class);
-                newIntent.putExtras(getIntent().getExtras());
+                newIntent.putExtras(extras);
                 startActivity(newIntent);
                 finish();
             }
@@ -56,7 +57,7 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent newIntent = new Intent(getApplicationContext(), ProductListActivity.class);
-                newIntent.putExtras(getIntent().getExtras());
+                newIntent.putExtras(extras);
                 newIntent.putExtra(RequestResponseStaticPartsHelper.LIST_FILTER_PRODUCT_FILTER, RequestResponseStaticPartsHelper.LIST_FILTER_ALL);
                 startActivity(newIntent);
                 finish();
