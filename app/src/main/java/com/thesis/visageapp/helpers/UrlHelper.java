@@ -16,6 +16,8 @@ public class UrlHelper {
     private static final String URL_ALL = "/allM";
     private static final String URL_FILTER = "/filterM";
     private static final String URL_FAV = "/favM";
+    private static final String URL_ADD = "/add";
+    private static final String URL_REMOVE = "/remove";
 
     public static String getLoginUrl() {
         return ROOT_URL + URL_USERS + URL_LOGIN;
@@ -47,5 +49,13 @@ public class UrlHelper {
 
     public static String getUserFavProductsUrl(String userId) {
         return ROOT_URL + URL_PRODUCTS + URL_FAV + URL_SLASH + userId;
+    }
+
+    public static String getFavProductAddictionUrl(String userId, String productId) {
+        return ROOT_URL + URL_PRODUCTS + URL_FAV + URL_ADD + URL_SLASH + userId + URL_SLASH + productId;
+    }
+
+    public static String getFavProductRemovingUrl(String userId, String productId) {
+        return ROOT_URL + URL_PRODUCTS + URL_FAV + URL_REMOVE + URL_SLASH + userId + URL_SLASH + productId;
     }
 }
