@@ -22,60 +22,55 @@
             android:id="@+id/button_products_m"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="8dp"
-            android:background="@color/primary_white_skin"
-            android:textColor="@color/primary_darker"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:padding="12dp"
             android:text="@string/products"/>
+
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/button_user_favorite_products_m"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="8dp"
-            android:background="@color/primary_white_skin"
-            android:textColor="@color/primary_darker"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:padding="12dp"
             android:text="@string/favorite_products"/>
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/button_user_cart_m"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="8dp"
-            android:background="@color/primary_white_skin"
-            android:textColor="@color/primary_darker"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:padding="12dp"
             android:text="@string/products"/>
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/button_user_order_history_m"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="8dp"
-            android:background="@color/primary_white_skin"
-            android:textColor="@color/primary_darker"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:padding="12dp"
             android:text="@string/order_history"/>
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/button_user_account_m"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="8dp"
-            android:background="@color/primary_white_skin"
-            android:textColor="@color/primary_darker"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:padding="12dp"
             android:text="@string/my_account"/>
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/button_logout_m"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="8dp"
-            android:background="@color/primary_white_skin"
-            android:textColor="@color/primary_darker"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:padding="12dp"
             android:text="@string/logout"/>
 
     </LinearLayout>

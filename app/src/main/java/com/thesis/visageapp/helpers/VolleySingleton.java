@@ -1,4 +1,4 @@
-package com.thesis.visageapp.processors;
+package com.thesis.visageapp.helpers;
 
 import android.content.Context;
 import android.text.TextUtils;

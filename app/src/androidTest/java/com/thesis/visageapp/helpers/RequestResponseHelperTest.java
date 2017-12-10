@@ -40,7 +40,7 @@ public class RequestResponseHelperTest extends TestCase {
                 "  ]\n" +
                 "}";
         // when
-        User testUser = RequestResponseStaticPartsHelper.processUserStringJSON(jsonString);
+        User testUser = RequestResponseHelper.processUserStringJSON(jsonString);
 
         // then
         Assert.assertEquals(testUser.getLogin(),testPhrase);

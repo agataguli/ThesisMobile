@@ -75,7 +75,5 @@
     <string name="delete_account_failed">Niepowodzenie usuwania konta. Sprawdź dane osobowe oraz połączenie sieciowe.</string>
     <string name="repeatPasswordOrInserNew">Nowe hasło/Powtórz hasło</string>
     <string name="back">Wróć</string>
-    <string name="no_products">Brak produktów</string>
-    <string name="filter_products">Filtruj produkty</string>
-    <string name="productAllRequestError">Niepowodzenie pobierania produktów. Sprawdź połączenie sieciowe.</string>
+    <string name="addToBasket">Dodaj do koszyka</string>
 </resources>

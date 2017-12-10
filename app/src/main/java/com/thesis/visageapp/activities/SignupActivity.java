@@ -18,10 +18,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.thesis.visageapp.R;
-import com.thesis.visageapp.helpers.RequestResponseStaticPartsHelper;
+import com.thesis.visageapp.helpers.RequestResponseHelper;
 import com.thesis.visageapp.helpers.UrlHelper;
 import com.thesis.visageapp.helpers.ValidateHelper;
-import com.thesis.visageapp.processors.VolleySingleton;
+import com.thesis.visageapp.helpers.VolleySingleton;
 import com.thesis.visageapp.objects.User;
 
 import org.json.JSONException;
@@ -101,7 +101,7 @@ public class SignupActivity extends AppCompatActivity {
         Log.d(TAG, "Login processed");
         if (!ValidateHelper.validateUserData(peselText, loginText, passwordText, rePasswordText, nameText, surnameText,
                 emailText, phoneNumberText, countryText, postCodeText, cityText, streetText, addressDetailsText, this)) {
-            onSignupFailed(RequestResponseStaticPartsHelper.RESPONSE_CODE_FAIL);
+            onSignupFailed(RequestResponseHelper.RESPONSE_CODE_FAIL);
             return;
         }
         this.signUpButton.setEnabled(false);
@@ -124,7 +124,7 @@ public class SignupActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if (response.equals(RequestResponseStaticPartsHelper.RESPONSE_CODE_SUCCESS)) {
+                        if (response.equals(RequestResponseHelper.RESPONSE_CODE_SUCCESS)) {
                             onSignupSuccess();
                         } else {
                             onSignupFailed(response);
@@ -166,7 +166,7 @@ public class SignupActivity extends AppCompatActivity {
         user.setUserId(peselText.getText().toString());
         user.setName(nameText.getText().toString());
         user.setLogin(loginText.getText().toString());
-        user.setPassword(RequestResponseStaticPartsHelper.hashMessage(this.passwordText.getText().toString()));
+        user.setPassword(RequestResponseHelper.hashMessage(this.passwordText.getText().toString()));
         user.setSurname(surnameText.getText().toString());
         user.setEmail(emailText.getText().toString());
         user.setPhoneNumber(phoneNumberText.getText().toString());
@@ -179,13 +179,13 @@ public class SignupActivity extends AppCompatActivity {
 
     public void onSignupFailed(String responseCode) {
         String errorToast = this.getResources().getString(R.string.signUpFailed);
-        if (responseCode.equals(RequestResponseStaticPartsHelper.RESPONSE_CODE_ERROR_SIGNUP_LOGIN_DUPLICATE)) {
+        if (responseCode.equals(RequestResponseHelper.RESPONSE_CODE_ERROR_SIGNUP_LOGIN_DUPLICATE)) {
             getResources().getString(R.string.status_code_signup_login_duplicate);
         } else {
-            if (responseCode.equals(RequestResponseStaticPartsHelper.RESPONSE_CODE_ERROR_SIGNUP_PESEL_DUPLICATE)) {
+            if (responseCode.equals(RequestResponseHelper.RESPONSE_CODE_ERROR_SIGNUP_PESEL_DUPLICATE)) {
                 getResources().getString(R.string.status_code_signup_pesel_duplicate);
             } else {
-                if (responseCode.equals(RequestResponseStaticPartsHelper.RESPONSE_CODE_ERROR_SIGNUP_EMAIL_DUPLICATE)) {
+                if (responseCode.equals(RequestResponseHelper.RESPONSE_CODE_ERROR_SIGNUP_EMAIL_DUPLICATE)) {
                     getResources().getString(R.string.status_code_signup_email_duplicate);
                 }
             }

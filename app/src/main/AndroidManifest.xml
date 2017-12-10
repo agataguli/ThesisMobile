@@ -31,13 +31,7 @@
         <activity
             android:name=".activities.UserProfileActivity"
             android:theme="@style/AppTheme.White" />
-        <activity
-            android:name=".activities.ProductListActivity"
-            android:theme="@style/AppTheme.White" />
-        <activity
-            android:name=".activities.ProductDetailsActivity"
-            android:theme="@style/AppTheme.White" />
-        <activity android:name=".activities.FilterProductsActivity"></activity>
+        <activity android:name=".activities.ProductListActivity"></activity>
     </application>
 
 </manifest>
