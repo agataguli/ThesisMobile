@@ -33,13 +33,13 @@ public class ProductListActivity extends ListActivity{
     private Bundle extras;
     private List productListList;
 
-    @Bind(R.id.button_back_l)
+   @Bind(R.id.button_back_l)
     Button backButton;
     @Bind(R.id.button_filter_l)
     Button filterButton;
     @Bind(R.id.text_empty_l)
     TextView emptyText;
-    @Bind(R.id.products_list_l)
+    @Bind(R.id.products_list)
     ListView productListView;
 
     @Override

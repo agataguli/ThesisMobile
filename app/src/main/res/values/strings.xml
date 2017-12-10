@@ -76,4 +76,9 @@
     <string name="repeatPasswordOrInserNew">Nowe hasło/Powtórz hasło</string>
     <string name="back">Wróć</string>
     <string name="addToBasket">Dodaj do koszyka</string>
+    <string name="no_products">Brak produktów</string>
+    <string name="filter_products">Filtruj produkty</string>
+    <string name="productAllRequestError">Niepowodzenie pobierania produktów. Sprawdź połączenie sieciowe.</string>
+    <string name="desc_list_item_icon">Ikona produktu </string>
+
 </resources>

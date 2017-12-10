@@ -51,6 +51,16 @@ public class MenuActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        this.productsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newIntent = new Intent(getApplicationContext(), ProductsActivity.class);
+                startActivity(newIntent);
+                finish();
+            }
+        });
+
     }
 
     @Override
