@@ -43,7 +43,7 @@ public class RequestResponseStaticPartsHelper {
 
     public static final String CATEGORY_BRUSHES = "PĘDZLE";
     public static final String CATEGORY_FURNITURE = "WYPOSAŻENIE";
-    public static final String CATEGORY_ACCESORIES = "AKCESORIA";
+    public static final String CATEGORY_ACCESSORIES = "AKCESORIA";
 
     public static User processUserStringJSON(String JSON) {
         Gson gson = new GsonBuilder().create();

@@ -2,6 +2,7 @@ package com.thesis.visageapp.helpers;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.thesis.visageapp.R;
@@ -15,7 +16,7 @@ public class ValidateHelper {
         return !s.isEmpty() && s.length() > 7 && s.length() < 17;
     }
 
-    public static boolean isValidatePesel(String s) {
+    public static boolean isValidPesel(String s) {
         return !s.isEmpty() && s.matches("[0-9]{11}");
     }
 
@@ -25,6 +26,10 @@ public class ValidateHelper {
 
     public static boolean isValidNameSurname(String s) {
         return !s.isEmpty() && Character.isUpperCase(s.charAt(0)) && s.length() > 2 && s.length() < 16;
+    }
+
+    public static boolean isValidProductNameBrand(String s) {
+        return s.isEmpty() || (!s.isEmpty() && s.length() > 1 && s.length() < 20);
     }
 
     public static boolean isValidEmail(String email) {
@@ -78,44 +83,44 @@ public class ValidateHelper {
                                              EditText surnameText, EditText emailText, EditText phoneNumberText,
                                              EditText countryText, EditText postCodeText, EditText cityText,
                                              EditText streetText, EditText addressDetailsText, Context context) {
-        boolean isValidate = true;
+        boolean isValid = true;
         if (!ValidateHelper.isValidNameSurname(nameText.getText().toString())) {
             nameText.setError(context.getString(R.string.nameError));
-            isValidate = false;
+            isValid = false;
         }
         if (!ValidateHelper.isValidNameSurname(surnameText.getText().toString())) {
             surnameText.setError(context.getString(R.string.nameError));
-            isValidate = false;
+            isValid = false;
         }
         if (!ValidateHelper.isValidEmail(emailText.getText().toString())) {
             emailText.setError(context.getString(R.string.emailError));
-            isValidate = false;
+            isValid = false;
         }
         if (!ValidateHelper.isValidPhoneNumber(phoneNumberText.getText().toString())) {
             phoneNumberText.setError(context.getString(R.string.phoneError));
-            isValidate = false;
+            isValid = false;
         }
         if (!ValidateHelper.isValidCountry(countryText.getText().toString())) {
             countryText.setError(context.getString(R.string.countryError));
-            isValidate = false;
+            isValid = false;
         }
         if (!ValidateHelper.isValidPostCode(postCodeText.getText().toString())) {
             postCodeText.setError(context.getString(R.string.postCodeError));
-            isValidate = false;
+            isValid = false;
         }
         if (!ValidateHelper.isValidCity(cityText.getText().toString())) {
             cityText.setError(context.getString(R.string.cityError));
-            isValidate = false;
+            isValid = false;
         }
         if (!ValidateHelper.isValidStreet(streetText.getText().toString())) {
             streetText.setError(context.getString(R.string.streetError));
-            isValidate = false;
+            isValid = false;
         }
         if (!ValidateHelper.isValidAddressDetails(addressDetailsText.getText().toString())) {
             addressDetailsText.setError(context.getString(R.string.addressDetailsError));
-            isValidate = false;
+            isValid = false;
         }
-        return isValidate && validatePasswords(passwordText, rePasswordText, context);
+        return isValid && validatePasswords(passwordText, rePasswordText, context);
     }
 
     public static boolean validateUserData(EditText peselText, EditText loginText, EditText passwordText,
@@ -123,16 +128,53 @@ public class ValidateHelper {
                                            EditText emailText, EditText phoneNumberText, EditText countryText,
                                            EditText postCodeText, EditText cityText, EditText streetText,
                                            EditText addressDetailsText, Context context) {
-        boolean isValidate = true;
-        if (!ValidateHelper.isValidatePesel(peselText.getText().toString())) {
+        boolean isValid = true;
+        if (!ValidateHelper.isValidPesel(peselText.getText().toString())) {
             peselText.setError(context.getString(R.string.peselError));
-            isValidate = false;
+            isValid = false;
         }
         if (!ValidateHelper.isValidLogin(loginText.getText().toString())) {
             loginText.setError(context.getString(R.string.loginError));
-            isValidate = false;
+            isValid = false;
         }
-        return isValidate && validateUpdateData(passwordText, rePasswordText, nameText, surnameText,
+        return isValid && validateUpdateData(passwordText, rePasswordText, nameText, surnameText,
                 emailText, phoneNumberText, countryText, postCodeText, cityText, streetText, addressDetailsText, context);
+    }
+
+    public static boolean validateProductFilterData(EditText productName, EditText productBrand, 
+                                                    EditText productPriceMin, EditText productPriceMax,
+                                                    CheckBox productCatBrushes, CheckBox productCatFurniture,
+                                                    CheckBox productCatAccessories, Context context) {
+        boolean isValid = true;
+        if (!ValidateHelper.isValidProductNameBrand(productName.getText().toString())) {
+            productName.setError(context.getString(R.string.productNameBrandError));
+            isValid = false;
+        }
+        if (!ValidateHelper.isValidProductNameBrand(productBrand.getText().toString())) {
+            productBrand.setError(context.getString(R.string.productNameBrandError));
+            isValid = false;
+        }
+        if(!ValidateHelper.isValidProductPrice(productPriceMin.getText().toString())) {
+            productPriceMin.setError(context.getString(R.string.productPriceErrorFilter));
+            isValid = false;
+        }
+        if(!ValidateHelper.isValidProductPrice(productPriceMax.getText().toString())) {
+            productPriceMax.setError(context.getString(R.string.productPriceErrorFilter));
+            isValid = false;
+        }
+        if(!ValidateHelper.isValidProductCategoryFilter(productCatBrushes, productCatAccessories, productCatFurniture)) {
+            productCatBrushes.setError(context.getString(R.string.productCatFilterError));
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    private static boolean isValidProductCategoryFilter(CheckBox c1, CheckBox c2, CheckBox c3) {
+        return c1.isChecked() || c2.isChecked() || c3.isChecked();
+    }
+
+    private static boolean isValidProductPrice(String s) {
+        return s.isEmpty() || s.matches("\\d+");
     }
 }

@@ -78,4 +78,23 @@
     <string name="no_products">Brak produktów</string>
     <string name="filter_products">Filtruj produkty</string>
     <string name="productAllRequestError">Niepowodzenie pobierania produktów. Sprawdź połączenie sieciowe.</string>
+    <string name="insert_filter_criteria">Wprowadź kryteria filtorowania a następnie zatwierdź przyciskiem filtruj.</string>
+    <string name="text_hint_filter_default_tip">Zbyt szczegółowe kryteria lub nieprawidłowe dane mogą spowodować, że twoje dane nie zostaną wyświetlone.</string>
+    <string name="filtering">Filtrowanie</string>
+    <string name="filter">Filtruj produkty</string>
+    <string name="filter_phrase">Szukana fraza</string>
+    <string name="filter_price_min">Minimalna cena</string>
+    <string name="filter_price_max">Maksymalna cena</string>
+    <string name="filter_category_brushes">Pędzle</string>
+    <string name="filter_category_furniture">Wyposażenie</string>
+    <string name="filter_category_accessories">Akcesoria</string>
+    <string name="text_price">Cena</string>
+    <string name="text_category">Kategoria</string>
+    <string name="text_name">Nazwa</string>
+    <string name="text_brand">Marka</string>
+    <string name="productNameBrandError">Wpisz frazę od długości od 2 do 20 znaków luz zostaw pole puste.</string>
+    <string name="productPriceErrorFilter">Wpisz kwotę całkowitą (bez groszy) lub pozostaw pole puste.</string>
+    <string name="productCatFilterError">Wybierz przynajmniej jedną kategorię produktów.</string>
+    <string name="filterError">Niepowodzenie filtracji. Sprawdź połączenie sieciowe i poprawność wprawadzonych danych.</string>
+    <string name="filterSuccess">Wyświetlone produkty odpowiadają wprowadzonemu kryterium. Aby stworzyć nowy filter ponownie klinij filtruj.</string>
 </resources>

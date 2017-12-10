@@ -37,7 +37,9 @@
         <activity
             android:name=".activities.ProductDetailsActivity"
             android:theme="@style/AppTheme.White" />
-        <activity android:name=".activities.FilterProductsActivity"></activity>
+        <activity
+            android:name=".activities.FilterProductsActivity"
+            android:theme="@style/AppTheme.White" />
     </application>
 
 </manifest>

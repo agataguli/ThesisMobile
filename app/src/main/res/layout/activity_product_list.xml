@@ -27,18 +27,4 @@
         android:background="@color/primary_white_skin"
         android:textColor="@color/primary_darker"
         android:text="@string/filter_products"/>
-
-    <TextView
-        android:id="@+id/text_empty_l"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/no_products" />
-
-    <ListView
-        android:id="@+id/products_list_l"
-        android:layout_width="match_parent"
-        android:layout_height="484dp" />
 </LinearLayout>

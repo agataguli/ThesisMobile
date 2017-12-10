@@ -350,7 +350,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private void restartActivity() {
         setResult(RESULT_OK, null);
         Intent intent = new Intent(this, UserProfileActivity.class);
-        intent.putExtras(extras);
+        intent.putExtras(this.extras);
         intent.putExtra(RequestResponseStaticPartsHelper.USER_BUNDLE, new Gson().toJson(this.user));
         startActivity(intent);
         finish();
