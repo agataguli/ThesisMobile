@@ -40,7 +40,9 @@
         <activity
             android:name=".activities.FilterProductsActivity"
             android:theme="@style/AppTheme.White" />
-        <activity android:name=".activities.ProductsActivity"></activity>
+        <activity
+            android:name=".activities.ProductsActivity"
+            android:theme="@style/AppTheme.White" />
     </application>
 
 </manifest>
