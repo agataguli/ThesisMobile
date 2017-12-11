@@ -100,4 +100,6 @@
     <string name="cart">Koszyk</string>
     <string name="favError">Nieoczekiwany błąd, sprawdź połączenie sieciowe.</string>
     <string name="show_fav">Pokaż twoje ulubione produkty</string>
+    <string name="addToBasket">Dodaj do koszyka</string>
+    <string name="desc_list_item_icon">Ikona produktu</string>
 </resources>
