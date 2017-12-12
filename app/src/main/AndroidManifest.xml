@@ -31,9 +31,11 @@
         <activity
             android:name=".activities.UserProfileActivity"
             android:theme="@style/AppTheme.White" />
+
         <activity android:name=".activities.ProductListActivity" />
-        <activity android:name=".activities.prodListActivity" />
-        <activity android:name=".activities.ProductsActivity"></activity>
+
+        <activity android:name=".activities.ProductsActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

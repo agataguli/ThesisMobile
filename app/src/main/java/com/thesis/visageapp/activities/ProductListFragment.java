@@ -1,4 +1,4 @@
-package com.thesis.visageapp.objects;
+package com.thesis.visageapp.activities;
 
 import android.app.ListFragment;
 import android.content.ClipData;
@@ -20,6 +20,8 @@ import com.android.volley.toolbox.Volley;
 import com.thesis.visageapp.R;
 import com.thesis.visageapp.helpers.RequestResponseStaticPartsHelper;
 import com.thesis.visageapp.helpers.UrlHelper;
+import com.thesis.visageapp.objects.Product;
+import com.thesis.visageapp.objects.ProductListAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ProductListFragment extends ListFragment {
+public class ProductListFragment extends android.support.v4.app.ListFragment {
     private ProductListControllerCallback callback;
 
     private ProductListAdapter listAdapter;

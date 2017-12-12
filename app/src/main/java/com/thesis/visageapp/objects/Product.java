@@ -1,5 +1,8 @@
 package com.thesis.visageapp.objects;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 public class Product {
     private String productId;
     private String name;
@@ -91,4 +94,5 @@ public class Product {
     public void setImageLink(String imageLink) {
         this.imageLink = imageLink;
     }
+
 }

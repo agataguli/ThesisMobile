@@ -80,5 +80,6 @@
     <string name="filter_products">Filtruj produkty</string>
     <string name="productAllRequestError">Niepowodzenie pobierania produktów. Sprawdź połączenie sieciowe.</string>
     <string name="desc_list_item_icon">Ikona produktu </string>
-
+    <string name="added_to_cart">Produkt został dodany do koszyka: </string>
+    <string name="number_of_products">Liczba produktów:</string>
 </resources>
