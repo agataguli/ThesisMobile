@@ -30,6 +30,7 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.UUID;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -38,8 +39,6 @@ public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
     private User user = new User();
 
-    @Bind(R.id.input_pesel_r)
-    EditText peselText;
     @Bind(R.id.input_login_r)
     EditText loginText;
     @Bind(R.id.input_password_r)
@@ -99,7 +98,7 @@ public class SignupActivity extends AppCompatActivity {
 
     public void signup() throws JSONException, UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException {
         Log.d(TAG, "Login processed");
-        if (!ValidateHelper.validateUserData(peselText, loginText, passwordText, rePasswordText, nameText, surnameText,
+        if (!ValidateHelper.validateUserData(loginText, passwordText, rePasswordText, nameText, surnameText,
                 emailText, phoneNumberText, countryText, postCodeText, cityText, streetText, addressDetailsText, this)) {
             onSignupFailed(RequestResponseStaticPartsHelper.RESPONSE_CODE_FAIL);
             return;
@@ -162,7 +161,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void prepareFormUser() throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException {
-        user.setUserId(peselText.getText().toString());
+        user.setUserId(UUID.randomUUID().toString());
         user.setName(nameText.getText().toString());
         user.setLogin(loginText.getText().toString());
         user.setPassword(RequestResponseStaticPartsHelper.hashMessage(this.passwordText.getText().toString()));

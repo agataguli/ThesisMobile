@@ -1,7 +1,7 @@
 package com.thesis.visageapp.objects;
 
 public class User {
-    private String userId;
+    private String userId = "new";
     private String login;
     private String password;
     private String name;

@@ -123,16 +123,12 @@ public class ValidateHelper {
         return isValid && validatePasswords(passwordText, rePasswordText, context);
     }
 
-    public static boolean validateUserData(EditText peselText, EditText loginText, EditText passwordText,
+    public static boolean validateUserData(EditText loginText, EditText passwordText,
                                            EditText rePasswordText, EditText nameText, EditText surnameText,
                                            EditText emailText, EditText phoneNumberText, EditText countryText,
                                            EditText postCodeText, EditText cityText, EditText streetText,
                                            EditText addressDetailsText, Context context) {
         boolean isValid = true;
-        if (!ValidateHelper.isValidPesel(peselText.getText().toString())) {
-            peselText.setError(context.getString(R.string.peselError));
-            isValid = false;
-        }
         if (!ValidateHelper.isValidLogin(loginText.getText().toString())) {
             loginText.setError(context.getString(R.string.loginError));
             isValid = false;

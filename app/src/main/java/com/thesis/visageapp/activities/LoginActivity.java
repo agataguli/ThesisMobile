@@ -98,8 +98,9 @@ public class LoginActivity extends AppCompatActivity {
     private void processLogin() throws JSONException {
         JSONObject jsonBody = new JSONObject(new Gson().toJson(this.user));
         final String requestBody = jsonBody.toString();
+        String url = UrlHelper.getLoginUrl();
 
-        final StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlHelper.getLoginUrl(), new Response.Listener<String>() {
+        final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 user = RequestResponseStaticPartsHelper.processUserStringJSON(response);
