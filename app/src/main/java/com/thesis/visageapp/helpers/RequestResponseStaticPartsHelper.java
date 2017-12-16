@@ -38,8 +38,8 @@ public class RequestResponseStaticPartsHelper {
     public static final String USER_ID = "userid";
     public static final String PRODUCT_ID = "productid";
 
-    public static final String LIST_FILTER_ALL = "all";
-    public static final String LIST_FILTER_PRODUCT_FILTER = "productFilter";
+    public static final String LIST_FILTER_PRODUCT_URL = "productFilter";
+    public static final String LIST_FILTER_PRODUCT_BODY = "productFilterBody";
 
     public static final String CATEGORY_BRUSHES = "PĘDZLE";
     public static final String CATEGORY_FURNITURE = "WYPOSAŻENIE";

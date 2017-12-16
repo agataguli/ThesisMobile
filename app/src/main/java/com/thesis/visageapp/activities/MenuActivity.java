@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import com.thesis.visageapp.R;
 import com.thesis.visageapp.helpers.RequestResponseStaticPartsHelper;
+import com.thesis.visageapp.helpers.UrlHelper;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -56,9 +57,9 @@ public class MenuActivity extends AppCompatActivity {
         this.productsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent newIntent = new Intent(getApplicationContext(), ProductListActivity.class);
+                Intent newIntent = new Intent(getApplicationContext(), ProductsActivity.class);
                 newIntent.putExtras(extras);
-                newIntent.putExtra(RequestResponseStaticPartsHelper.LIST_FILTER_PRODUCT_FILTER, RequestResponseStaticPartsHelper.LIST_FILTER_ALL);
+                newIntent.putExtra(RequestResponseStaticPartsHelper.LIST_FILTER_PRODUCT_URL, UrlHelper.getGetAllProductUrl());
                 startActivity(newIntent);
                 finish();
             }

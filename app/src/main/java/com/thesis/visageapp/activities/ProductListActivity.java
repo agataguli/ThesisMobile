@@ -1,11 +1,8 @@
 package com.thesis.visageapp.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -20,18 +17,14 @@ import com.thesis.visageapp.processors.VolleySingleton;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class ProductListActivity extends AppCompatActivity {
     private static final String TAG = "ProductListActivity";
-    private Bundle extras;
+
     private List productListList;
 
-    @Bind(R.id.button_back_l)
-    Button backButton;
-    @Bind(R.id.button_filter_l)
-    Button filterButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,36 +33,19 @@ public class ProductListActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         this.productListList = new ArrayList();
-        this.extras = getIntent().getExtras();
 
-        if (extras.getString(RequestResponseStaticPartsHelper.LIST_FILTER_PRODUCT_FILTER).equals(RequestResponseStaticPartsHelper.LIST_FILTER_ALL)) {
+/*
+        if (extras.getString(RequestResponseStaticPartsHelper.LIST_FILTER_PRODUCT_URL).equals(RequestResponseStaticPartsHelper.LIST_FILTER_ALL)) {
             this.fillListWithAllAvailableProducts();
         } else {
-            this.processFillingListWithResponseProducts(extras.getString(RequestResponseStaticPartsHelper.LIST_FILTER_PRODUCT_FILTER));
-        }
+            this.processFillingListWithResponseProducts(extras.getString(RequestResponseStaticPartsHelper.LIST_FILTER_PRODUCT_URL));
+        }*/
 
-        this.backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                backToMenuActivity();
-            }
-        });
 
-        this.filterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startProductListActivityWithFilter();
-            }
-        });
 
     }
 
-    private void startProductListActivityWithFilter() {
-        Intent intent = new Intent(this, FilterProductsActivity.class);
-        intent.putExtras(this.extras);
-        startActivity(intent);
-        finish();
-    }
+
 
 
     private void fillListWithAllAvailableProducts() {
@@ -98,10 +74,5 @@ public class ProductListActivity extends AppCompatActivity {
         // teraz weź to zmapuj na productListView.
     }
 
-    private void backToMenuActivity() {
-        Intent intent = new Intent(this, MenuActivity.class);
-        intent.putExtras(this.extras);
-        startActivity(intent);
-        finish();
-    }
+
 }

@@ -9,15 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.thesis.visageapp.R;
 import com.thesis.visageapp.helpers.RequestResponseStaticPartsHelper;
 import com.thesis.visageapp.helpers.UrlHelper;
+import com.thesis.visageapp.processors.VolleySingleton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,16 +25,16 @@ import java.util.List;
 
 public class ProductListFragment extends ListFragment {
     private ProductListControllerCallback callback;
-
     private ProductListAdapter listAdapter;
+    private Bundle extras;
+    private boolean filteredData = false;
 
     public interface ProductListControllerCallback<T> {
         void onItemClicked(T item);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_layout, container, false);
         return view;
     }
@@ -42,12 +42,15 @@ public class ProductListFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.extras = getActivity().getIntent().getExtras();
+        if(this.extras.getString(RequestResponseStaticPartsHelper.LIST_FILTER_PRODUCT_URL).equals(UrlHelper.getFilterUrl())) {
+            this.filteredData = true;
+        }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
         try {
             callback = (ProductListControllerCallback) getActivity();
 
@@ -59,21 +62,15 @@ public class ProductListFragment extends ListFragment {
     @Override
     public void onDetach() {
         super.onDetach();
-
         callback = null;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        Log.i("activity created", "called");
-
-        listAdapter = new ProductListAdapter(getActivity(), R.layout.product_list_row, new ArrayList<Product>());
-
-        setListAdapter(listAdapter);
-
         getData();
+        listAdapter = new ProductListAdapter(getActivity(), R.layout.product_list_row, new ArrayList<Product>());
+        setListAdapter(listAdapter);
     }
 
     @Override
@@ -81,39 +78,40 @@ public class ProductListFragment extends ListFragment {
         callback.onItemClicked(this.getListAdapter().getItem(position));
     }
 
-    //Uses volley to asynchronously download data from the rest source and fills the list of items.
     private void getData() {
-        Log.i("getData", "called");
-
-        RequestQueue que = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            que = Volley.newRequestQueue(getContext());
-        }
-
-        StringRequest request = new StringRequest(
-                Request.Method.GET,
-                UrlHelper.getGetAllProductUrl(),
-                new Response.Listener<String>() {
-
-                    @Override
-                    public void onResponse(String response) {
-                        Log.i("onResponse", response);
-
-                        List<Product> temp = RequestResponseStaticPartsHelper.proceessProductsStringJson(response);
-
-                        listAdapter.addAll(temp);
-                        listAdapter.notifyDataSetChanged();
-                    }
-                },
+        int method = Request.Method.GET;
+        if(this.filteredData) method = Request.Method.POST;
+        String url = this.extras.getString(RequestResponseStaticPartsHelper.LIST_FILTER_PRODUCT_URL);
+        StringRequest request = new StringRequest(method, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                List<Product> temp = RequestResponseStaticPartsHelper.proceessProductsStringJson(response);
+                listAdapter.addAll(temp);
+                listAdapter.notifyDataSetChanged();
+            }
+        },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley error", error.getMessage());
                     }
                 }
-        );
+        ){
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
 
-        que.add(request);
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                String requestBody = null;
+                if(filteredData) {
+                    requestBody = extras.getString(RequestResponseStaticPartsHelper.LIST_FILTER_PRODUCT_BODY);
+                }
+                return requestBody == null ? null : requestBody.getBytes();
+            }
+        };
+        VolleySingleton.getInstance(getActivity().getBaseContext()).addToRequestQueue(request);
     }
 
 }
