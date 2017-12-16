@@ -134,8 +134,7 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(TAG, error.toString());
-                Toast.makeText(getBaseContext(), getResources().getString(R.string.loginRequestError),
-                        Toast.LENGTH_SHORT).show();
+                onSignupFailed(RequestResponseStaticPartsHelper.RESPONSE_CODE_FAIL);
             }
         }) {
             @Override

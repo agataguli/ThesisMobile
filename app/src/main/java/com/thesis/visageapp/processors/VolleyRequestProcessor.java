@@ -27,8 +27,8 @@ import java.security.NoSuchAlgorithmException;
 public class VolleyRequestProcessor {
     private String responseCode = " 702";
 
-    public static void processImageRequest(final ImageView iv, String productPhotoLink) {
-        ImageRequest ir = new ImageRequest(productPhotoLink, new Response.Listener<Bitmap>() {
+    public static void processImageRequest(final ImageView iv, String productPhotoLink, final Context context) {
+        ImageRequest imageRequest = new ImageRequest(productPhotoLink, new Response.Listener<Bitmap>() {
             @Override
             public void onResponse(Bitmap response) {
                 iv.setImageBitmap(response);
@@ -40,6 +40,7 @@ public class VolleyRequestProcessor {
                 // do not send any notification if imageRequest not response
             }
         });
+        VolleySingleton.getInstance(context).addToRequestQueue(imageRequest);
     }
 
     // TODO: move the logic here

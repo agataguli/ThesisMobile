@@ -180,8 +180,6 @@ public class FilterProductsActivity extends AppCompatActivity {
             }
         };
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
-
-
     }
 
     private void onFilterSuccess(String response) {

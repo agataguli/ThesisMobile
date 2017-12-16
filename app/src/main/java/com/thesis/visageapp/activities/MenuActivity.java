@@ -56,7 +56,7 @@ public class MenuActivity extends AppCompatActivity {
         this.productsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent newIntent = new Intent(getApplicationContext(), ProductsActivity.class);
+                Intent newIntent = new Intent(getApplicationContext(), ProductListActivity.class);
                 newIntent.putExtras(extras);
                 newIntent.putExtra(RequestResponseStaticPartsHelper.LIST_FILTER_PRODUCT_FILTER, RequestResponseStaticPartsHelper.LIST_FILTER_ALL);
                 startActivity(newIntent);
