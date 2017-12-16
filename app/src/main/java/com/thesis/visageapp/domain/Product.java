@@ -1,4 +1,4 @@
-package com.thesis.visageapp.objects;
+package com.thesis.visageapp.domain;
 
 public class Product {
     private String productId;

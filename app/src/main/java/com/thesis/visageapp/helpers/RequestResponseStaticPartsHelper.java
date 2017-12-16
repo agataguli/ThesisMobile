@@ -3,8 +3,8 @@ package com.thesis.visageapp.helpers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.thesis.visageapp.objects.Product;
-import com.thesis.visageapp.objects.User;
+import com.thesis.visageapp.domain.Product;
+import com.thesis.visageapp.domain.User;
 
 import org.apache.commons.codec.binary.Base64;
 

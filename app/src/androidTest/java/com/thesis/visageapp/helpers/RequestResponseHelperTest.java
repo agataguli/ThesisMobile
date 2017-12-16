@@ -1,6 +1,6 @@
 package com.thesis.visageapp.helpers;
 
-import com.thesis.visageapp.objects.User;
+import com.thesis.visageapp.domain.User;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;

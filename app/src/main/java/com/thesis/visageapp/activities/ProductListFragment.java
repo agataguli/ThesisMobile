@@ -1,8 +1,8 @@
-package com.thesis.visageapp.objects;
+package com.thesis.visageapp.activities;
 
-import android.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +15,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.thesis.visageapp.R;
+import com.thesis.visageapp.domain.Product;
 import com.thesis.visageapp.helpers.RequestResponseStaticPartsHelper;
 import com.thesis.visageapp.helpers.UrlHelper;
+import com.thesis.visageapp.objects.ProductListAdapter;
 import com.thesis.visageapp.processors.VolleySingleton;
 
 import java.util.ArrayList;

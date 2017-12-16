@@ -22,7 +22,7 @@ import com.thesis.visageapp.helpers.RequestResponseStaticPartsHelper;
 import com.thesis.visageapp.helpers.UrlHelper;
 import com.thesis.visageapp.helpers.ValidateHelper;
 import com.thesis.visageapp.processors.VolleySingleton;
-import com.thesis.visageapp.objects.User;
+import com.thesis.visageapp.domain.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -15,8 +15,8 @@ import com.thesis.visageapp.R;
 import com.thesis.visageapp.helpers.RequestResponseStaticPartsHelper;
 import com.thesis.visageapp.helpers.UrlHelper;
 import com.thesis.visageapp.helpers.ValidateHelper;
-import com.thesis.visageapp.objects.ProductFilter;
-import com.thesis.visageapp.objects.User;
+import com.thesis.visageapp.domain.ProductFilter;
+import com.thesis.visageapp.domain.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;

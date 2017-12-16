@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.thesis.visageapp.R;
+import com.thesis.visageapp.domain.Product;
 
 import java.util.List;
 
