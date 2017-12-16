@@ -112,25 +112,6 @@ public class FilterProductsActivity extends AppCompatActivity {
 
     }
 
-    /*private void fillFavoriteProductList() {
-        final StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                UrlHelper.getUserFavProductsUrl(this.user.getUserId()),
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        onFilterSuccess(response);
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getBaseContext(), getResources().getString(R.string.favError),
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
-    }*/
-
-
     private void onFilterFailed() {
         Toast.makeText(getBaseContext(), getResources().getString(R.string.filterError),
                 Toast.LENGTH_SHORT).show();
@@ -165,18 +146,6 @@ public class FilterProductsActivity extends AppCompatActivity {
         productFilter.setProductCategoryFurniture(this.productCatFurniture.isChecked());
     }
 
-    /*
-    String url = this.extras.getString(RequestResponseStaticPartsHelper.LIST_FILTER_PRODUCT_URL);
-        private void onFilterSuccess(String response) {
-            Toast.makeText(getBaseContext(), getResources().getString(R.string.filterSuccess),
-                    Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, ProductListActivity.class);
-            intent.putExtras(this.extras);
-            intent.putExtra(RequestResponseStaticPartsHelper.LIST_FILTER_PRODUCT_URL, response);
-            startActivity(intent);
-            finish();
-        }
-    */
     private void setEnableButtons(boolean b) {
         this.filterButton.setEnabled(b);
         this.backButton.setEnabled(b);
