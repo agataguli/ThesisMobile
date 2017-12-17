@@ -71,7 +71,7 @@ public class ProductListFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         getData();
-        listAdapter = new ProductListAdapter(getActivity(), R.layout.product_list_row, new ArrayList<Product>());
+        listAdapter = new ProductListAdapter(getActivity(), R.layout.product_list_row, new ArrayList<Product>(), this.getTag());
         setListAdapter(listAdapter);
     }
 
