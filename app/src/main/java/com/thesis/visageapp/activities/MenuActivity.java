@@ -38,8 +38,8 @@ public class MenuActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         this.extras = getIntent().getExtras();
-        this.user = RequestResponseStaticPartsHelper.processUserStringJSON(extras.getString(
-                RequestResponseStaticPartsHelper.USER_BUNDLE));
+        this.user = RequestResponseStaticPartsHelper.processUserStringJSON(extras.getString
+                (RequestResponseStaticPartsHelper.USER_BUNDLE));
 
         this.userAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
