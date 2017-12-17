@@ -104,4 +104,12 @@
     <string name="desc_list_item_icon">Ikona produktu</string>
     <string name="added_to_cart">Produkt został dodany do koszyka: </string>
     <string name="number_of_products">Liczba produktów:</string>
+    <string name="orderTheProducts">Zrealizuj zamówienie</string>
+    <string name="emptycart">pusty koszyk</string>
+    <string name="orderRequestError">Niepowodzenie, sprawdź połączenie sieciowe.</string>
+    <string name="cannotOrderEmptyCard">Nie można zamówić, brak produktów w koszyku.</string>
+    <string name="orderProcessed">Sprawdzanie dostępności wybranych produktów</string>
+    <string name="addItemToCart">Dodaj do koszyka</string>
+    <string name="orderProcessedComplete">Gratulację, wkrótce nasz kurier się z Tobą skontaktuje.</string>
+    <string name="order">Zamów</string>
 </resources>

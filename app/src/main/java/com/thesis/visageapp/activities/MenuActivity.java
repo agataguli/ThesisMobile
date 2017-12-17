@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.thesis.visageapp.R;
+import com.thesis.visageapp.domain.User;
 import com.thesis.visageapp.helpers.RequestResponseStaticPartsHelper;
 import com.thesis.visageapp.helpers.UrlHelper;
 
@@ -15,9 +16,12 @@ import butterknife.ButterKnife;
 
 public class MenuActivity extends AppCompatActivity {
     private Bundle extras = new Bundle();
+    User user = new User();
 
     @Bind(R.id.button_products_m)
     Button productsButton;
+    @Bind(R.id.button_fav_m)
+    Button favoritesButton;
     @Bind(R.id.button_user_cart_m)
     Button cartButton;
     @Bind(R.id.button_user_order_history_m)
@@ -34,6 +38,8 @@ public class MenuActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         this.extras = getIntent().getExtras();
+        this.user = RequestResponseStaticPartsHelper.processUserStringJSON(extras.getString(
+                RequestResponseStaticPartsHelper.USER_BUNDLE));
 
         this.userAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +66,18 @@ public class MenuActivity extends AppCompatActivity {
                 Intent newIntent = new Intent(getApplicationContext(), ProductsActivity.class);
                 newIntent.putExtras(extras);
                 newIntent.putExtra(RequestResponseStaticPartsHelper.LIST_FILTER_PRODUCT_URL, UrlHelper.getGetAllProductUrl());
+                startActivity(newIntent);
+                finish();
+            }
+        });
+
+        this.favoritesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newIntent = new Intent(getApplicationContext(), ProductsActivity.class);
+                newIntent.putExtras(extras);
+                newIntent.putExtra(RequestResponseStaticPartsHelper.LIST_FILTER_PRODUCT_URL,
+                        UrlHelper.getUserFavProductsUrl(user.getUserId()));
                 startActivity(newIntent);
                 finish();
             }

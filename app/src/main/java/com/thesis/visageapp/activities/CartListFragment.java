@@ -12,16 +12,8 @@ import com.thesis.visageapp.R;
 import com.thesis.visageapp.domain.Cart;
 import com.thesis.visageapp.objects.ProductListAdapter;
 
-import java.util.List;
-
 public class CartListFragment extends android.support.v4.app.Fragment {
-    private CartDetailsFragmentCallback callback;
     private Cart cart;
-
-    /*Decided to not implement this. */
-    public interface CartDetailsFragmentCallback<T> {
-        List<T> getCartIetms();
-    }
 
     public void setCart(Cart cart) {
         this.cart = cart;

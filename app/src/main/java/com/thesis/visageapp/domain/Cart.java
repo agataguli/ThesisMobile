@@ -1,7 +1,7 @@
 package com.thesis.visageapp.domain;
 
+import java.util.ArrayList;
 import java.util.List;
-
 
 public class Cart<T> {
     private List<T> products;
@@ -30,5 +30,14 @@ public class Cart<T> {
 
     public void setProducts(List<T> products) {
         this.products = products;
+    }
+
+    public List<String> getOnlyIdsOfProducts() {
+        List <Product> productsF = (List<Product>) this.products;
+        List<String> ids = new ArrayList<>();
+        for(Product p: productsF) {
+            ids.add(p.getProductId());
+        }
+        return ids;
     }
 }

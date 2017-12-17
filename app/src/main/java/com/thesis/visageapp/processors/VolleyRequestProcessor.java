@@ -23,6 +23,7 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 public class VolleyRequestProcessor {
     private String responseCode = " 702";
@@ -43,7 +44,6 @@ public class VolleyRequestProcessor {
         VolleySingleton.getInstance(context).addToRequestQueue(imageRequest);
     }
 
-    // TODO: move the logic here
     public String processPostUserData(final String URL, User user, final Context context) throws JSONException, UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException {
         JSONObject jsonBody = new JSONObject(new Gson().toJson(user));
         final String requestBody = jsonBody.toString();
@@ -92,5 +92,35 @@ public class VolleyRequestProcessor {
 
     private void onUpdateSuccess() {
         this.responseCode = RequestResponseStaticPartsHelper.RESPONSE_CODE_SUCCESS;
+    }
+
+    public static void orderProductsFromCart(List allProductsIds, final Context context, String userId)
+            throws JSONException {
+        final String requestBody = new Gson().toJson(allProductsIds);
+        String url = UrlHelper.getOrderUrl(userId);
+        final StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        int i = 10;
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, context.getString(R.string.orderRequestError),
+                        Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                return requestBody == null ? null : requestBody.getBytes();
+            }
+        };
+        VolleySingleton.getInstance(context).addToRequestQueue(stringRequest);
     }
 }
