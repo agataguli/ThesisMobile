@@ -1,5 +1,6 @@
 package com.thesis.visageapp.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -8,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.thesis.visageapp.R;
@@ -16,7 +16,6 @@ import com.thesis.visageapp.domain.Cart;
 import com.thesis.visageapp.domain.Product;
 import com.thesis.visageapp.domain.User;
 import com.thesis.visageapp.helpers.RequestResponseStaticPartsHelper;
-import com.thesis.visageapp.objects.ProductListAdapter;
 import com.thesis.visageapp.processors.VolleyRequestProcessor;
 
 import org.json.JSONException;
@@ -36,6 +35,7 @@ public class ProductsActivity extends AppCompatActivity implements ProductListFr
 
     private Button cartButton;
     private Button orderButton;
+    private Button filterButton;
 
 
     @Override
@@ -89,14 +89,16 @@ public class ProductsActivity extends AppCompatActivity implements ProductListFr
         }
 
         this.orderButton = (Button) findViewById(R.id.order_button);
-        this.orderButton.setOnClickListener(new View.OnClickListener() {
+
+
+        this.filterButton = (Button) findViewById(R.id.button_filter_p);
+        this.filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    processOrder();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                Intent newIntent = new Intent(getApplicationContext(), FilterProductsActivity.class);
+                newIntent.putExtras(extras);
+                startActivity(newIntent);
+                finish();
             }
         });
     }
