@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.thesis.visageapp.R;
@@ -15,6 +16,7 @@ import com.thesis.visageapp.domain.Cart;
 import com.thesis.visageapp.domain.Product;
 import com.thesis.visageapp.domain.User;
 import com.thesis.visageapp.helpers.RequestResponseStaticPartsHelper;
+import com.thesis.visageapp.objects.ProductListAdapter;
 import com.thesis.visageapp.processors.VolleyRequestProcessor;
 
 import org.json.JSONException;
@@ -159,4 +161,5 @@ public class ProductsActivity extends AppCompatActivity implements ProductListFr
         super.onRestoreInstanceState(savedInstanceState);
         cartButton.setText("" + getString(R.string.number_of_products) + "" + cart.getSize());
     }
+
 }

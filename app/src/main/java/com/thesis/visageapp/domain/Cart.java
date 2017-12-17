@@ -6,7 +6,8 @@ import java.util.List;
 public class Cart<T> {
     private List<T> products;
 
-    public Cart() {}
+    public Cart() {
+    }
 
     public Cart(List<T> products) {
         this.products = products;
@@ -33,11 +34,12 @@ public class Cart<T> {
     }
 
     public List<String> getOnlyIdsOfProducts() {
-        List <Product> productsF = (List<Product>) this.products;
+        List<Product> productsF = (List<Product>) this.products;
         List<String> ids = new ArrayList<>();
-        for(Product p: productsF) {
+        for (Product p : productsF) {
             ids.add(p.getProductId());
         }
         return ids;
+
     }
 }
