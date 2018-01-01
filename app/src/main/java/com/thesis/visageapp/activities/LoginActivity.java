@@ -47,6 +47,9 @@ public class LoginActivity extends AppCompatActivity {
     Button loginButton;
     @Bind(R.id.link_signup_l)
     TextView signupLinkedText;
+    @Bind(R.id.link_instruction_manual_l)
+    TextView manualLinkedText;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,6 +73,16 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
+                startActivityForResult(intent, REQUEST_SIGNUP);
+                finish();
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+            }
+        });
+
+        manualLinkedText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), InstructionManualActivity.class);
                 startActivityForResult(intent, REQUEST_SIGNUP);
                 finish();
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);

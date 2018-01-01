@@ -37,6 +37,9 @@
         <activity
             android:name=".activities.ProductsActivity"
             android:theme="@style/AppTheme.White" />
+        <activity
+            android:name=".activities.InstructionManualActivity"
+            android:theme="@style/AppTheme.Dark"/>
     </application>
 
 </manifest>

@@ -113,4 +113,16 @@
     <string name="orderProcessedComplete">Gratulację, wkrótce nasz kurier się z Tobą skontaktuje.</string>
     <string name="deletedCartItem">Produkt został usunięty z koszyka.</string>
     <string name="order">Zamów</string>
+    <string name="instruction_manual_text_im">Każdy użytkownik rejestrując się w serwisie akceptuje ogólne założenia aplikacji. \n
+        Sklep nie ponosi odpowiedzialności za brak rozwagi podczas realizowania zakupów i nie realizuje zwrotów.\n
+        Administrator sklepu ma prawo odmówić realizacji zamówienia przez użytkownika. \n
+        Wysyłka realizowana jest wyłącznie przez kuriera, opłacana za pobraniem. \n
+        Administrator ma prawo do przeglądu danych klienta i skontaktowania się z nim drogą elektroniczną lub za pośrednictwem telefonu. \n\n
+        Aby zrealizować zamówienie w sklepie internetowym zarejestruj się podając swoje dokładne dane, dodaj produkty do koszyka a następnie kliknij zamów. \n
+        W ciagu 1 dnia roboczego, administator skontaktuje się z zamawiającym drogą elektroniczną w celu uzgodnienia daty przyjazdu kuriera.\n
+        Po zakończeniu realizacji zamówienia status zamówienia zostanie zmieniony. \n
+        Zwroty nie są realizowane, ale w razie wątpliwości, użytkownik powinien skontaktować się z panelem administracyjnym o następującym adresie elektronicznym:\n
+        appmakemeup@gmail.com.
+    </string>
+    <string name="link_instruction_manual_l">Regulamin użytkownika</string>
 </resources>

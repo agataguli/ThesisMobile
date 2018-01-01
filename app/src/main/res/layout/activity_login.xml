@@ -59,5 +59,13 @@
             android:gravity="center"
             android:textSize="16dip"/>
 
+        <TextView android:id="@+id/link_instruction_manual_l"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:text="@string/link_instruction_manual_l"
+            android:gravity="center"
+            android:textSize="10dip"/>
+
     </LinearLayout>
 </ScrollView>

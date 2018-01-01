@@ -90,7 +90,6 @@ public class ProductsActivity extends AppCompatActivity implements ProductListFr
 
         this.orderButton = (Button) findViewById(R.id.order_button);
 
-
         this.filterButton = (Button) findViewById(R.id.button_filter_p);
         this.filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +98,17 @@ public class ProductsActivity extends AppCompatActivity implements ProductListFr
                 newIntent.putExtras(extras);
                 startActivity(newIntent);
                 finish();
+            }
+        });
+
+        this.orderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    processOrder();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
